@@ -88,7 +88,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        echo " Testler başlatılıyor..."
+                        echo " Testler başlatılıyor (Headless mod)..."
                         sh """#!/bin/bash
                             export JAVA_HOME=/Users/hakantetik/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home
                             export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
@@ -96,6 +96,7 @@ pipeline {
 
                             mvn test -Dtest=runners.TestRunner \\
                                 -Dbrowser=${params.BROWSER} \\
+                                -Dheadless=true \\
                                 -Dcucumber.plugin="pretty,json:target/cucumber.json,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
                         """
                     } catch (Exception e) {
@@ -155,7 +156,7 @@ pipeline {
 - Excel: ${BUILD_URL}artifact/${EXCEL_REPORTS}/
 - Cucumber: ${BUILD_URL}artifact/target/cucumber-reports/
 
-Tarayıcı: ${params.BROWSER}
+Tarayıcı: ${params.BROWSER} (Headless mod)
 ${currentBuild.result == 'SUCCESS' ? ' BAŞARILI' : ' BAŞARISIZ'}"""
             }
             cleanWs notFailBuild: true
