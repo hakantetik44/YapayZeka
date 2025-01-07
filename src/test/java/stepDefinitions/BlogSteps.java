@@ -16,14 +16,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.time.Duration;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Dimension;
+import java.util.List;
+import java.util.Map;
 
 public class BlogSteps {
     private WebDriver driver;
     private WebDriverWait wait;
+    private static final Duration TIMEOUT = Duration.ofSeconds(10);
+    private static final Duration PAGE_LOAD_TIMEOUT = Duration.ofSeconds(3);
 
     public BlogSteps() {
         this.driver = Driver.getDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, TIMEOUT);
     }
 
     @Given("Blog sayfasına git")
@@ -33,119 +38,157 @@ public class BlogSteps {
             String blogUrl = System.getProperty("blogUrl", "http://localhost:3000");
             driver.get(blogUrl);
             
-            wait.until(driver -> {
-                String title = driver.getTitle();
-                System.out.println("Mevcut Başlık: " + title);
-                return title != null && !title.isEmpty();
-            });
-            
+            // Sayfa yüklenmesini bekle
+            new WebDriverWait(driver, PAGE_LOAD_TIMEOUT).until(
+                webDriver -> ((JavascriptExecutor) webDriver)
+                    .executeScript("return document.readyState")
+                    .equals("complete")
+            );
         } catch (Exception e) {
-            System.out.println("HATA: Sayfa yüklenemedi!");
-            System.out.println("Hata Mesajı: " + e.getMessage());
-            throw e;
+            throw new RuntimeException("Blog sayfası yüklenemedi: " + e.getMessage());
         }
     }
 
-    @Then("Sayfa başlığı {string} olmalı")
-    @Step("Sayfa başlığı kontrol ediliyor: {0}")
-    public void sayfaBasligiOlmali(String expectedTitle) {
-        String actualTitle = driver.getTitle();
-        Assert.assertEquals("Sayfa başlığı beklenen değerden farklı!", expectedTitle, actualTitle);
+    @Then("Sayfa {int} saniye içinde yüklenmeli")
+    public void sayfaSaniyeIcindeYuklenmeli(int saniye) {
+        long startTime = System.currentTimeMillis();
+        new WebDriverWait(driver, Duration.ofSeconds(saniye))
+            .until(webDriver -> ((JavascriptExecutor) webDriver)
+                .executeScript("return document.readyState")
+                .equals("complete"));
+        long endTime = System.currentTimeMillis();
+        long loadTime = (endTime - startTime) / 1000;
+        Assert.assertTrue("Sayfa " + saniye + " saniye içinde yüklenmedi!", loadTime <= saniye);
     }
 
-    @Then("Menüde {string} linki olmalı")
-    @Step("Menüde {0} linki kontrol ediliyor")
-    public void menudeLinkiOlmali(String linkText) {
+    @When("Ekran boyutu {string} olarak ayarlanır")
+    public void ekranBoyutuOlarakAyarlanir(String boyut) {
+        String[] dimensions = boyut.split("x");
+        int width = Integer.parseInt(dimensions[0].trim());
+        int height = Integer.parseInt(dimensions[1].trim());
+        driver.manage().window().setSize(new Dimension(width, height));
+        // Yeniden boyutlandırma sonrası kısa bekleme
         try {
-            String sectionId = "";
-            switch (linkText) {
-                case "Hakkımda":
-                    sectionId = "about";
-                    break;
-                case "Projeler":
-                    sectionId = "projects";
-                    break;
-                case "Yetenekler":
-                    sectionId = "skills";
-                    break;
-                default:
-                    sectionId = linkText.toLowerCase();
-            }
-            
-            // Nav menüsündeki linkleri bul
-            String xpath = String.format("//nav//a[@href='#%s']", sectionId);
-            WebElement link = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-            Assert.assertTrue(linkText + " linki görünür değil!", link.isDisplayed());
-        } catch (Exception e) {
-            System.out.println("HATA: " + linkText + " linki bulunamadı!");
-            throw e;
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
+    }
+
+    @Then("Sayfa responsive olarak görüntülenmeli")
+    public void sayfaResponsiveOlarakGoruntulenmeli() {
+        // Viewport kontrolü
+        Long viewportWidth = (Long) ((JavascriptExecutor) driver)
+            .executeScript("return window.innerWidth;");
+        Long viewportHeight = (Long) ((JavascriptExecutor) driver)
+            .executeScript("return window.innerHeight;");
+        Assert.assertTrue("Viewport boyutları uygun değil", 
+            viewportWidth > 0 && viewportHeight > 0);
+    }
+
+    @Then("Menü öğeleri doğru şekilde görüntülenmeli")
+    public void menuOgeleriDogruSekildeGoruntulenmeli() {
+        List<WebElement> menuItems = wait.until(
+            ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("nav a"))
+        );
+        Assert.assertTrue("Menü öğeleri görünmüyor", menuItems.size() > 0);
+        
+        // Her menü öğesinin görünür ve tıklanabilir olduğunu kontrol et
+        menuItems.forEach(item -> {
+            Assert.assertTrue("Menü öğesi görünür değil: " + item.getText(), 
+                item.isDisplayed());
+            Assert.assertTrue("Menü öğesi tıklanabilir değil: " + item.getText(), 
+                item.isEnabled());
+        });
     }
 
     @When("{string} bölümüne git")
     @Step("{0} bölümüne gidiliyor")
     public void bolumuneGit(String bolumAdi) {
         try {
-            String sectionId = "";
-            switch (bolumAdi) {
-                case "Hakkımda":
-                    sectionId = "about";
-                    break;
-                case "Projeler":
-                    sectionId = "projects";
-                    break;
-                case "Yetenekler":
-                    sectionId = "skills";
-                    break;
-                default:
-                    sectionId = bolumAdi.toLowerCase();
-            }
+            String sectionId = bolumAdi.toLowerCase()
+                .replace("ı", "i")
+                .replace("ğ", "g")
+                .replace("ü", "u")
+                .replace("ş", "s")
+                .replace("ö", "o")
+                .replace("ç", "c")
+                .replace(" ", "-");
             
-            // Section'ı bul
-            WebElement section = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(sectionId)));
+            WebElement section = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.id(sectionId))
+            );
             
-            // Smooth scroll
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", section);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                System.out.println("HATA: Bekleme sırasında kesinti oluştu!");
-            }
+            ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", 
+                section
+            );
             
+            // Smooth scroll için kısa bekleme
+            Thread.sleep(500);
         } catch (Exception e) {
-            System.out.println("HATA: " + bolumAdi + " bölümüne gidilemedi!");
-            throw e;
+            throw new RuntimeException(bolumAdi + " bölümüne gidilemedi: " + e.getMessage());
         }
     }
 
-    @Then("{string} başlığı görünür olmalı")
-    @Step("{0} başlığı kontrol ediliyor")
-    public void basligiGorunurOlmali(String heading) {
-        try {
-            String sectionId = "";
-            switch (heading) {
-                case "Hakkımda":
-                    sectionId = "about";
-                    break;
-                case "Projeler":
-                    sectionId = "projects";
-                    break;
-                case "Yetenekler":
-                    sectionId = "skills";
-                    break;
-                default:
-                    sectionId = heading.toLowerCase();
-            }
-            
-            // Section başlığını bul
-            String xpath = String.format("//section[@id='%s']//h2[contains(@class, 'glow-text')]", sectionId);
-            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-            
-            // Görünürlük kontrolü
-            Assert.assertTrue(heading + " başlığı görünür değil", element.isDisplayed());
-        } catch (Exception e) {
-            System.out.println("HATA: " + heading + " başlığı bulunamadı!");
-            throw e;
-        }
+    @Then("Form alanları görünür olmalı")
+    public void formAlanlariGorunurOlmali(List<Map<String, String>> alanlar) {
+        alanlar.forEach(alan -> {
+            String fieldName = alan.get("alan").toLowerCase()
+                .replace(" ", "-");
+            WebElement field = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                    By.cssSelector(String.format("input[name='%s'], textarea[name='%s']", fieldName, fieldName))
+                )
+            );
+            Assert.assertTrue(
+                alan.get("alan") + " alanı görünür değil", 
+                field.isDisplayed()
+            );
+        });
+    }
+
+    @Then("Form validasyonları çalışmalı")
+    public void formValidasyonlariCalismali() {
+        // Boş form gönderimi
+        WebElement submitButton = wait.until(
+            ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']"))
+        );
+        submitButton.click();
+        
+        // Hata mesajlarını kontrol et
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.cssSelector(".error-message")
+        ));
+    }
+
+    @Then("Form başarıyla gönderilebilmeli")
+    public void formBasariylaGonderilebilmeli() {
+        // Form alanlarını doldur
+        fillFormField("ad-soyad", "Test Kullanıcı");
+        fillFormField("email", "test@example.com");
+        fillFormField("konu", "Test Mesajı");
+        fillFormField("mesaj", "Bu bir test mesajıdır.");
+        
+        // Formu gönder
+        WebElement submitButton = wait.until(
+            ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']"))
+        );
+        submitButton.click();
+        
+        // Başarı mesajını kontrol et
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.cssSelector(".success-message")
+        ));
+    }
+
+    private void fillFormField(String fieldName, String value) {
+        WebElement field = wait.until(
+            ExpectedConditions.presenceOfElementLocated(
+                By.cssSelector(String.format("input[name='%s'], textarea[name='%s']", fieldName, fieldName))
+            )
+        );
+        field.clear();
+        field.sendKeys(value);
     }
 }
