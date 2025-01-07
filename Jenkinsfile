@@ -182,23 +182,57 @@ pipeline {
     post {
         always {
             script {
-                // Blog sunucusunu durdur
-                sh "lsof -ti:\${BLOG_PORT} | xargs kill -9 || true"
+                try {
+                    // Allure raporu oluştur
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: 'target/allure-results']]
+                    ])
+                    
+                    // Allure process'ini kontrol et ve kapat
+                    sh '''
+                        # Allure process'lerini bul ve sonlandır
+                        pkill -f "allure serve" || true
+                        
+                        # Jetty process'lerini kontrol et ve sonlandır
+                        pkill -f "org.eclipse.jetty" || true
+                        
+                        # Port 56951'i kullanan process'i sonlandır
+                        lsof -ti:56951 | xargs kill -9 || true
+                    '''
+                    
+                } catch (Exception e) {
+                    echo "Allure raporu oluşturulurken hata: ${e.message}"
+                } finally {
+                    // Test sonuçlarını arşivle
+                    archiveArtifacts artifacts: 'target/**/*', fingerprint: true
+                    
+                    // Blog sunucusunu durdur
+                    sh '''
+                        lsof -ti:${BLOG_PORT} | xargs kill -9 || true
+                    '''
+                    
+                    // Workspace'i temizle
+                    cleanWs()
+                }
                 
-                echo """╔═══════════════════════════╗
+                // Test sonuç özeti
+                echo """
+╔═══════════════════════════╗
 ║   Test Sonuç Özeti        ║
 ╚═══════════════════════════╝
 
 📝 Raporlar:
 - Allure: ${BUILD_URL}allure/
-- Excel: ${BUILD_URL}artifact/${EXCEL_REPORTS}/
-- Cucumber: ${BUILD_URL}artifact/target/cucumber-reports/
+- Test Artifacts: ${BUILD_URL}artifact/target/
 
-Blog URL: http://localhost:${BLOG_PORT}
-Tarayıcı: ${params.BROWSER} (Headless mod)
-${currentBuild.result == 'SUCCESS' ? '✅ BAŞARILI' : '❌ BAŞARISIZ'}"""
+🎯 Build Durumu: ${currentBuild.result ?: 'SUCCESS'}
+⏱️ Süre: ${currentBuild.durationString}
+                """
             }
-            cleanWs notFailBuild: true
         }
     }
 }
