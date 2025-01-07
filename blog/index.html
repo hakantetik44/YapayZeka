@@ -4,455 +4,984 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hakan Tetik - SDET & Test Automation Engineer</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-</head>
-<body>
-    <div class="progress-container">
-        <div class="progress-bar"></div>
-    </div>
-    
-    <header>
-        <nav>
-            <div class="logo-container">
-                <h1><i class="fas fa-code"></i> Hakan Tetik</h1>
-            </div>
-            <div class="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul>
-                <li><a href="#anasayfa"><i class="fas fa-home"></i> Ana Sayfa</a></li>
-                <li><a href="#hakkimda"><i class="fas fa-user"></i> Hakkımda</a></li>
-                <li><a href="#projeler"><i class="fas fa-laptop-code"></i> Projeler</a></li>
-                <li><a href="#kurslar"><i class="fas fa-graduation-cap"></i> Kurslar</a></li>
-                <li><a href="#iletisim"><i class="fas fa-envelope"></i> İletişim</a></li>
-                <li class="dark-mode-toggle">
-                    <i class="fas fa-moon"></i>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <style>
+        /* Temel stiller */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0f1a;
+            color: #e2e8f0;
+        }
 
-    <div class="hero-section" id="anasayfa">
-        <div class="hero-content" data-aos="fade-up">
-            <div class="profile-image">
-                <img src="images/image.png" alt="Hakan Tetik">
+        /* Mobil menü stilleri */
+        .mobile-menu {
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            
+            .mobile-menu-button {
+                display: block;
+            }
+        }
+
+        /* Responsive tasarım için özel stiller */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem !important;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem !important;
+            }
+        }
+
+        /* Animasyonlar ve efektler */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .contact-form {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .contact-form.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Gelişmiş görsel efektler */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 1rem;
+            overflow: hidden;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: 1.1rem;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Yıldız kayması ve ışık efektleri */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #3b82f6, transparent);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 6px #3b82f6);
+            animation: shootingStar linear infinite;
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateX(10vw) translateY(10vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg) scale(0.2);
+                opacity: 0;
+            }
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(59, 130, 246, 0.3);
+            pointer-events: none;
+            animation: floatIcon linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes floatIcon {
+            0% {
+                transform: translate(var(--startX), 100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--endX), -100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .glow-effect {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: moveGlow linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes moveGlow {
+            0% {
+                transform: translate(var(--moveX), 100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--moveEndX), 50vh) scale(1);
+            }
+            100% {
+                transform: translate(var(--moveEndX), -100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .tech-icon {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(59, 130, 246, 0.4);
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+            animation: techFloat linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes techFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--floatX), var(--floatY)) rotate(var(--rotation));
+                opacity: 0;
+            }
+        }
+
+        /* Matrix efekti */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* Hero section efektleri */
+        .hero-section {
+            position: relative;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at center, rgba(139, 92, 246, 0.2) 0%, transparent 70%);
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 30%),
+                repeating-linear-gradient(
+                    transparent 0%,
+                    rgba(59, 130, 246, 0.05) 1%,
+                    transparent 2%
+                );
+            animation: bgRotate 20s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Yeni yıldız kayması ve ışık efektleri */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #3b82f6, transparent);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 6px #3b82f6);
+            animation: shootingStar linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes shootingStar {
+            0% {
+                transform: translateX(0) translateY(0) rotate(45deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translateX(10vw) translateY(10vh) rotate(45deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh) rotate(45deg) scale(0.2);
+                opacity: 0;
+            }
+        }
+
+        /* Yüzen teknoloji ikonları */
+        .floating-icon {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(59, 130, 246, 0.3);
+            pointer-events: none;
+            animation: floatIcon linear infinite;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+        }
+
+        @keyframes floatIcon {
+            0% {
+                transform: translate(var(--startX), 100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(var(--endX), -100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Parlayan ışık efektleri */
+        .glow-effect {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: moveGlow linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes moveGlow {
+            0% {
+                transform: translate(var(--moveX), 100vh) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: translate(var(--moveEndX), 50vh) scale(1);
+            }
+            100% {
+                transform: translate(var(--moveEndX), -100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Yüzen kod sembolleri */
+        .code-symbol {
+            position: absolute;
+            font-family: 'Fira Code', monospace;
+            font-size: 20px;
+            color: rgba(59, 130, 246, 0.4);
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+            animation: codeFloat linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes codeFloat {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translate(var(--floatX), var(--floatY)) rotate(var(--rotation));
+                opacity: 0;
+            }
+        }
+
+        /* Işık huzmesi efekti */
+        .light-beam {
+            position: absolute;
+            width: 2px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
+            animation: lightBeam linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes lightBeam {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(200%) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Parıldayan yıldızlar */
+        .twinkling-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .hero-text-container {
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 
+                0 0 30px rgba(59, 130, 246, 0.3),
+                inset 0 0 20px rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text-container:hover {
+            transform: translateY(-5px) rotateX(5deg);
+        }
+
+        .hero-title {
+            position: relative;
+            text-shadow: 
+                0 0 20px rgba(59, 130, 246, 0.5),
+                0 0 40px rgba(139, 92, 246, 0.3),
+                0 0 60px rgba(236, 72, 153, 0.2);
+        }
+
+        /* Kayan kodlar efekti */
+        .code-rain {
+            position: absolute;
+            color: rgba(59, 130, 246, 0.3);
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            animation: codeRain linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes codeRain {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <canvas id="matrix" class="matrix-bg"></canvas>
+    <div id="background-effects" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-effect">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    Hakan Tetik
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="desktop-menu hidden md:flex space-x-8">
+                    <a href="#about" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Hakkımda</a>
+                    <a href="#projects" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Projeler</a>
+                    <a href="#iletisim" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">İletişim</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-button md:hidden text-gray-300 hover:text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
-            <h2 class="animated-text">Merhaba, Ben Hakan Tetik</h2>
-            <p class="typing-text">SDET & Test Automation Engineer</p>
-            <div class="social-icons">
-                <a href="https://www.linkedin.com/in/hakantetik44/" class="social-icon" target="_blank" title="LinkedIn">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="#" class="social-icon" title="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="#" class="social-icon" title="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden">
+                <a href="#about" class="nav-link block py-2 text-gray-300 hover:text-white transition-colors duration-300">Hakkımda</a>
+                <a href="#projects" class="nav-link block py-2 text-gray-300 hover:text-white transition-colors duration-300">Projeler</a>
+                <a href="#iletisim" class="nav-link block py-2 text-gray-300 hover:text-white transition-colors duration-300">İletişim</a>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <main>
-        <section id="hakkimda" class="about-section">
-            <div class="about-header">
-                <h2>I'm Here for You</h2>
-                <p class="about-subtitle">
-                    As a test automation expert with over 3 years of experience, I'm here to help you with your software testing needs, 
-                    share knowledge through courses, and connect with the testing community.
-                </p>
-            </div>
-
-            <div class="about-grid">
-                <div class="about-card">
-                    <div class="card-content">
-                        <h3>Latest Courses</h3>
-                        <p>Check out my newest test automation courses on Udemy</p>
-                        <a href="#kurslar" class="view-link">VIEW NOW</a>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero-section min-h-screen flex items-center pt-16 relative overflow-hidden">
+        <div class="code-rain" id="codeRain"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="animate__animated animate__fadeIn max-w-4xl mx-auto text-center">
+                <div class="mb-8 profile-img-container inline-block">
+                    <img src="images/image.png" alt="Hakan Tetik" class="w-48 h-48 rounded-full mx-auto border-4 border-white/30 shadow-2xl hover:scale-105 transition-transform duration-300" style="object-fit: cover;">
                 </div>
-
-                <div class="about-card">
-                    <div class="card-content">
-                        <h3>Tech Articles</h3>
-                        <p>Read my latest articles about testing and automation</p>
-                        <a href="#blog" class="view-link">VIEW NOW</a>
-                    </div>
+                <div class="hero-text-container mb-12">
+                    <h1 class="hero-title text-6xl md:text-7xl font-bold mb-6" data-text="SDET & Test Automation Engineer">SDET & Test Automation Engineer</h1>
+                    <p class="hero-subtitle text-2xl">Kalite ve Test Otomasyonu Uzmanı</p>
                 </div>
-
-                <div class="about-card">
-                    <div class="card-content">
-                        <h3>Open Source</h3>
-                        <p>Explore my contributions and test frameworks</p>
-                        <a href="#portfolio" class="view-link">VIEW ALL</a>
-                    </div>
+                <div class="hero-buttons flex justify-center space-x-6">
+                    <a href="#iletisim" class="relative bg-gradient-to-r from-blue-500 to-purple-500 text-white px-8 py-3 rounded-full font-medium hover:shadow-xl transform hover:scale-105 transition duration-300">
+                        <span class="relative z-10">İletişime Geç</span>
+                    </a>
+                    <a href="#projects" class="relative bg-gradient-to-r from-gray-900 to-gray-800 text-white border border-blue-500/30 px-8 py-3 rounded-full font-medium hover:border-blue-500 transition duration-300">
+                        <span class="relative z-10">Projelerimi Gör</span>
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projeler" class="projects-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-project-diagram"></i>
-                <h2>Projeler</h2>
-            </div>
-            <div class="projects-grid">
-                <div class="project-card" data-aos="fade-up">
-                    <div class="project-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Mobile Test Automation Framework</h3>
-                    <p>Android ve iOS platformları için Appium, Java ve Cucumber kullanarak geliştirilen test framework'ü</p>
-                    <div class="project-tags">
-                        <span>Appium</span>
-                        <span>Java</span>
-                        <span>Cucumber</span>
-                    </div>
-                </div>
-
-                <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="project-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Web Test Automation</h3>
-                    <p>Cypress ve JavaScript ile Page Object Model kullanılarak geliştirilen web test otomasyonu projesi</p>
-                    <div class="project-tags">
-                        <span>Cypress</span>
-                        <span>JavaScript</span>
-                        <span>POM</span>
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 glow-text">Hakkımda</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="card p-8 rounded-2xl gradient-border">
+                    <p class="text-gray-300 leading-relaxed text-lg mb-8">
+                        Yazılım test otomasyonu alanında uzmanlaşmış bir SDET olarak, kaliteli ve güvenilir yazılım ürünleri geliştirme sürecine katkıda bulunuyorum. 
+                        Test otomasyonu frameworkleri geliştiriyor, CI/CD süreçlerini iyileştiriyor ve test stratejileri oluşturuyorum.
+                    </p>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-blue-500 mb-2">3+</div>
+                            <div class="text-gray-400">Yıl Deneyim</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-purple-500 mb-2">50+</div>
+                            <div class="text-gray-400">Proje Tamamlandı</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-pink-500 mb-2">1000+</div>
+                            <div class="text-gray-400">Test Senaryosu</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="kurslar" class="courses-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-graduation-cap"></i>
-                <h2>Udemy Kursları</h2>
-            </div>
-            <div class="courses-grid">
-                <div class="course-card" data-aos="fade-up">
-                    <img src="https://img-c.udemycdn.com/course/240x135/placeholder.jpg" alt="Kurs">
-                    <div class="course-content">
-                        <h3>Appium ile iOS ve Android Test Otomasyonu</h3>
-                        <p>Mobil uygulama testleri için kapsamlı bir eğitim</p>
-                        <a href="#" class="course-link">Kursa Git <i class="fas fa-arrow-right"></i></a>
+    <!-- Skills Section -->
+    <section id="skills" class="py-32 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 glow-text">Yetenekler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="card p-8 rounded-2xl">
+                    <div class="text-4xl text-blue-500 mb-6"><i class="fas fa-code"></i></div>
+                    <h3 class="text-xl font-semibold mb-6 text-white">Test Otomasyonu</h3>
+                    <div class="space-y-4">
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Selenium WebDriver</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Cucumber BDD</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">TestNG / JUnit</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Appium</div>
                     </div>
                 </div>
-                <!-- Add more course cards -->
+                <div class="card p-8 rounded-2xl">
+                    <div class="text-4xl text-purple-500 mb-6"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="text-xl font-semibold mb-6 text-white">Programlama</h3>
+                    <div class="space-y-4">
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Java</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Python</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">JavaScript</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">SQL</div>
+                    </div>
+                </div>
+                <div class="card p-8 rounded-2xl">
+                    <div class="text-4xl text-pink-500 mb-6"><i class="fas fa-cloud"></i></div>
+                    <h3 class="text-xl font-semibold mb-6 text-white">DevOps</h3>
+                    <div class="space-y-4">
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Jenkins</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Git</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">Docker</div>
+                        <div class="skill-tag text-sm px-4 py-2 rounded-full text-white inline-block mr-2 mb-2">AWS</div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="iletisim" class="contact-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-envelope"></i>
-                <h2>İletişim</h2>
+    <!-- Projects Section -->
+    <section id="projects" class="py-32 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 glow-text">Projeler</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="card p-8 rounded-2xl">
+                    <div class="flex items-center mb-6">
+                        <div class="text-3xl text-blue-500 mr-4"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="text-xl font-semibold text-white">E-Ticaret Test Otomasyonu</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Selenium ve Cucumber kullanarak kapsamlı bir e-ticaret test otomasyonu framework'ü geliştirdim.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm">Selenium</span>
+                        <span class="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">Cucumber</span>
+                        <span class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm">Java</span>
+                    </div>
+                </div>
+                <div class="card p-8 rounded-2xl">
+                    <div class="flex items-center mb-6">
+                        <div class="text-3xl text-purple-500 mr-4"><i class="fas fa-code"></i></div>
+                        <h3 class="text-xl font-semibold text-white">API Test Otomasyonu</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        RestAssured ve TestNG kullanarak mikroservis mimarisinde API testleri geliştirdim.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm">RestAssured</span>
+                        <span class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded-full text-sm">TestNG</span>
+                        <span class="bg-pink-500/20 text-pink-400 px-3 py-1 rounded-full text-sm">Postman</span>
+                    </div>
+                </div>
             </div>
-            <div class="contact-content" data-aos="fade-up">
-                <form id="contact-form">
-                    <div class="form-group">
-                        <label for="name">İsim</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-posta</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Mesaj</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        Gönder <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="testimonials" class="testimonials-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-quote-right"></i>
-                <h2>Referanslar</h2>
-            </div>
-            <div class="testimonials-slider" data-aos="fade-up">
-                <div class="testimonial-slide active">
-                    <div class="testimonial-content">
-                        <p>"Hakan'ın test otomasyonu konusundaki uzmanlığı projemize büyük katkı sağladı. Özellikle mobil test süreçlerinde gösterdiği performans etkileyiciydi."</p>
-                        <div class="testimonial-author">
-                            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="John Doe">
-                            <div class="author-info">
-                                <h4>John Doe</h4>
-                                <span>Tech Lead, QESTIT France</span>
+    <!-- İletişim Section -->
+    <section id="iletisim" class="py-32 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-800"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">İletişim</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-effect gradient-border p-8 md:p-12 rounded-2xl">
+                    <form class="space-y-6 contact-form visible" id="contact-form">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="ad-soyad" class="block text-sm font-medium text-gray-300">Ad Soyad</label>
+                                <input type="text" name="ad-soyad" id="ad-soyad" required
+                                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                                    placeholder="Adınız Soyadınız">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+                                <input type="email" name="email" id="email" required
+                                    class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                                    placeholder="ornek@email.com">
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="testimonial-slide">
-                    <div class="testimonial-content">
-                        <p>"Udemy'deki kursları sayesinde test otomasyonunu sıfırdan öğrendim. Detaylı anlatımı ve pratik örnekleri ile konuları çok iyi kavradım."</p>
-                        <div class="testimonial-author">
-                            <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Jane Smith">
-                            <div class="author-info">
-                                <h4>Jane Smith</h4>
-                                <span>Udemy Öğrencisi</span>
-                            </div>
+                        <div class="space-y-2">
+                            <label for="mesaj" class="block text-sm font-medium text-gray-300">Mesaj</label>
+                            <textarea name="mesaj" id="mesaj" rows="4" required
+                                class="w-full bg-gray-900/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+                                placeholder="Mesajınız..."></textarea>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="github-activity" class="github-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fab fa-github"></i>
-                <h2>GitHub Aktivitelerim</h2>
-            </div>
-            <div class="github-activity" data-aos="fade-up">
-                <!-- GitHub aktiviteleri JavaScript ile doldurulacak -->
-            </div>
-        </section>
-
-        <section id="timeline" class="timeline-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-history"></i>
-                <h2>Kariyer Yolculuğum</h2>
-            </div>
-            <div class="timeline" data-aos="fade-up">
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>SDET - QESTIT France</h3>
-                        <span class="date">2023 - Şimdi</span>
-                        <p>Mobil ve web uygulamaları için test otomasyonu framework'leri geliştirme</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>Test Automation Engineer - Instant System</h3>
-                        <span class="date">2022 - 2023</span>
-                        <p>Selenium ve Appium ile test otomasyonu projeleri geliştirme</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <h3>ISTQB Sertifikası</h3>
-                        <span class="date">2022</span>
-                        <p>ISTQB Foundation Level (CTFL) sertifikası</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="blog" class="blog-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-blog"></i>
-                <h2>Blog Yazıları</h2>
-            </div>
-            <div class="blog-filters" data-aos="fade-up">
-                <button class="filter-btn active" onclick="filterPosts('all')">Tümü</button>
-                <button class="filter-btn" onclick="filterPosts('automation')">Test Otomasyonu</button>
-                <button class="filter-btn" onclick="filterPosts('mobile')">Mobil Testing</button>
-                <button class="filter-btn" onclick="filterPosts('career')">Kariyer</button>
-            </div>
-            <div class="blog-grid">
-                <article class="blog-post" data-category="automation" data-aos="fade-up">
-                    <div class="post-image">
-                        <img src="https://picsum.photos/400/250" alt="Blog Post">
-                    </div>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <span><i class="far fa-calendar"></i> 7 Ocak 2025</span>
-                            <span><i class="far fa-clock"></i> 5 dk okuma</span>
+                        <div>
+                            <button type="submit" 
+                                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-lg font-medium hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+                                Gönder
+                            </button>
                         </div>
-                        <h3>Selenium vs Cypress: Hangisini Seçmeli?</h3>
-                        <p>Modern web uygulamalarının test otomasyonunda en çok kullanılan iki framework'ün detaylı karşılaştırması...</p>
-                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <article class="blog-post" data-category="mobile" data-aos="fade-up" data-aos-delay="100">
-                    <div class="post-image">
-                        <img src="https://picsum.photos/400/251" alt="Blog Post">
-                    </div>
-                    <div class="post-content">
-                        <div class="post-meta">
-                            <span><i class="far fa-calendar"></i> 6 Ocak 2025</span>
-                            <span><i class="far fa-clock"></i> 4 dk okuma</span>
-                        </div>
-                        <h3>Appium ile iOS Uygulamalarının Test Otomasyonu</h3>
-                        <p>iOS uygulamalarının test otomasyonunda dikkat edilmesi gereken püf noktalar ve best practice'ler...</p>
-                        <a href="#" class="read-more">Devamını Oku <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </article>
-            </div>
-        </section>
+    <!-- Arka plan efektleri için container -->
+    <div id="background-effects" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
 
-        <section id="portfolio" class="portfolio-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-laptop-code"></i>
-                <h2>Portfolio</h2>
-            </div>
-            <div class="portfolio-grid">
-                <div class="portfolio-item" data-aos="fade-up">
-                    <img src="https://picsum.photos/400/300" alt="Project 1">
-                    <div class="portfolio-overlay">
-                        <h3>Mobile Test Framework</h3>
-                        <p>Appium & Java based test automation framework</p>
-                        <div class="portfolio-links">
-                            <a href="#" class="btn-demo"><i class="fas fa-eye"></i> Demo</a>
-                            <a href="#" class="btn-code"><i class="fab fa-github"></i> Code</a>
-                        </div>
-                    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-8 md:mb-0">
+                    <p class="text-gray-400">&copy; 2024 Hakan Tetik. Tüm hakları saklıdır.</p>
                 </div>
-                <div class="portfolio-item" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://picsum.photos/400/301" alt="Project 2">
-                    <div class="portfolio-overlay">
-                        <h3>Web Automation Suite</h3>
-                        <p>Cypress & JavaScript test automation project</p>
-                        <div class="portfolio-links">
-                            <a href="#" class="btn-demo"><i class="fas fa-eye"></i> Demo</a>
-                            <a href="#" class="btn-code"><i class="fab fa-github"></i> Code</a>
-                        </div>
-                    </div>
+                <div class="flex space-x-8">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
                 </div>
             </div>
-        </section>
-
-        <section id="skills" class="skills-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-chart-radar"></i>
-                <h2>Yetenekler</h2>
-            </div>
-            <div class="skills-container" data-aos="fade-up">
-                <div class="skill-radar">
-                    <canvas id="skillRadar"></canvas>
-                </div>
-                <div class="skill-stats">
-                    <div class="skill-stat">
-                        <div class="stat-number">95%</div>
-                        <div class="stat-label">Test Automation</div>
-                        <div class="progress-bar" data-progress="95"></div>
-                    </div>
-                    <div class="skill-stat">
-                        <div class="stat-number">90%</div>
-                        <div class="stat-label">Mobile Testing</div>
-                        <div class="progress-bar" data-progress="90"></div>
-                    </div>
-                    <div class="skill-stat">
-                        <div class="stat-number">85%</div>
-                        <div class="stat-label">API Testing</div>
-                        <div class="progress-bar" data-progress="85"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="cv" class="cv-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-file-alt"></i>
-                <h2>CV</h2>
-            </div>
-            <div class="cv-container" data-aos="fade-up">
-                <div class="cv-preview">
-                    <img src="images/cv-preview.png" alt="CV Preview">
-                </div>
-                <div class="cv-download">
-                    <h3>Professional CV'mi İndirin</h3>
-                    <p>Test otomasyonu ve yazılım geliştirme alanındaki 3+ yıllık deneyimimi içeren detaylı CV.</p>
-                    <div class="download-buttons">
-                        <a href="#" class="btn-download pdf">
-                            <i class="fas fa-file-pdf"></i> PDF İndir
-                        </a>
-                        <a href="#" class="btn-download word">
-                            <i class="fas fa-file-word"></i> Word İndir
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="achievements" class="achievements-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-trophy"></i>
-                <h2>Başarılar</h2>
-            </div>
-            <div class="achievements-grid">
-                <div class="achievement-card" data-aos="fade-up">
-                    <div class="achievement-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="achievement-number">10,000+</div>
-                    <div class="achievement-label">Udemy Öğrencisi</div>
-                </div>
-                <div class="achievement-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="achievement-icon">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="achievement-number">4.8</div>
-                    <div class="achievement-label">Kurs Değerlendirmesi</div>
-                </div>
-                <div class="achievement-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="achievement-icon">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <div class="achievement-number">17+</div>
-                    <div class="achievement-label">Udemy Kursu</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="newsletter" class="newsletter-section">
-            <div class="section-header" data-aos="fade-right">
-                <i class="fas fa-envelope-open-text"></i>
-                <h2>Newsletter</h2>
-            </div>
-            <div class="newsletter-container" data-aos="fade-up">
-                <h3>Test Otomasyonu Dünyasından Haberdar Olun</h3>
-                <p>Yeni blog yazıları, kurslar ve test otomasyonu ipuçları için abone olun.</p>
-                <form id="newsletter-form" class="newsletter-form">
-                    <div class="form-group">
-                        <input type="email" id="newsletter-email" placeholder="E-posta adresiniz" required>
-                        <button type="submit" class="btn-subscribe">
-                            Abone Ol <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-social">
-                <a href="https://www.linkedin.com/in/hakantetik44/" class="social-icon" target="_blank">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="#" class="social-icon">
-                    <i class="fab fa-twitter"></i>
-                </a>
-            </div>
-            <p>&copy; 2025 Hakan Tetik | <i class="fas fa-code"></i> ile ❤️ kullanılarak yapıldı</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            offset: 100,
-            once: true
+        // Mobil menü toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        // Mobil menüyü başlangıçta gizle
+        mobileMenu.style.display = 'none';
+
+        mobileMenuButton.addEventListener('click', () => {
+            if (mobileMenu.style.display === 'none') {
+                mobileMenu.style.display = 'block';
+            } else {
+                mobileMenu.style.display = 'none';
+            }
         });
+
+        // Menü öğelerine tıklandığında mobil menüyü kapat
+        document.querySelectorAll('.mobile-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    mobileMenu.style.display = 'none';
+                }
+            });
+        });
+
+        // Pencere boyutu değiştiğinde kontrol
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                mobileMenu.style.display = 'none';
+            }
+        });
+
+        // Menü dışı tıklamada menüyü kapat
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                mobileMenu.style.display = 'none';
+            }
+        });
+
+        // Sayfa yüklendiğinde form görünürlüğünü ayarla
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.classList.add('visible');
+            }
+        });
+
+        // Form submit işlemi
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Form submitted');
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.style.display = 'none';
+                }
+            });
+        });
+
+        // Contact form animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(contactForm);
+
+        // Matrix effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 15, 26, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#3b82f6';
+            ctx.font = fontSize + 'px Fira Code';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+
+        // Yeni efektler
+        function createBackgroundEffects() {
+            const container = document.getElementById('background-effects');
+            
+            // Yıldız kayması efekti
+            function createShootingStar() {
+                const star = document.createElement('div');
+                star.className = 'shooting-star';
+                
+                const startX = Math.random() * window.innerWidth;
+                const duration = 2 + Math.random() * 3;
+                
+                star.style.left = `${startX}px`;
+                star.style.top = '0';
+                star.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(star);
+                setTimeout(() => star.remove(), duration * 1000);
+            }
+
+            // Işık huzmesi efekti
+            function createLightBeam() {
+                const beam = document.createElement('div');
+                beam.className = 'light-beam';
+                
+                const duration = 3 + Math.random() * 2;
+                beam.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(beam);
+                setTimeout(() => beam.remove(), duration * 1000);
+            }
+
+            // Parıldayan yıldızlar
+            function createTwinklingStar() {
+                const star = document.createElement('div');
+                star.className = 'twinkling-star';
+                
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.animationDuration = `${1 + Math.random() * 2}s`;
+                
+                container.appendChild(star);
+                setTimeout(() => star.remove(), 3000);
+            }
+
+            // Teknoloji ikonları
+            function createTechIcon() {
+                const icons = [
+                    'fa-java', 'fa-python', 'fa-js', 'fa-html5', 'fa-css3',
+                    'fa-git-alt', 'fa-docker', 'fa-jenkins', 'fa-aws',
+                    'fa-chrome', 'fa-github'
+                ];
+                
+                const icon = document.createElement('i');
+                icon.className = `floating-icon fab ${icons[Math.floor(Math.random() * icons.length)]}`;
+                
+                const startX = Math.random() * window.innerWidth;
+                const endX = startX + (Math.random() - 0.5) * 200;
+                const duration = 8 + Math.random() * 7;
+                
+                icon.style.setProperty('--startX', `${startX}px`);
+                icon.style.setProperty('--endX', `${endX}px`);
+                icon.style.left = '0';
+                icon.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(icon);
+                setTimeout(() => icon.remove(), duration * 1000);
+            }
+
+            // Kod sembolleri
+            function createCodeSymbol() {
+                const symbols = ['{ }', '< >', '/>', '()', '[]', '// ', 'fn', '=>', '&&', '||'];
+                
+                const symbol = document.createElement('div');
+                symbol.className = 'code-symbol';
+                symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                const startX = Math.random() * window.innerWidth;
+                const moveX = (Math.random() - 0.5) * 200;
+                const moveY = -300 - Math.random() * 300;
+                const rotation = Math.random() * 360;
+                const duration = 4 + Math.random() * 3;
+                
+                symbol.style.left = `${startX}px`;
+                symbol.style.top = '100%';
+                symbol.style.setProperty('--floatX', `${moveX}px`);
+                symbol.style.setProperty('--floatY', `${moveY}px`);
+                symbol.style.setProperty('--rotation', `${rotation}deg`);
+                symbol.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(symbol);
+                setTimeout(() => symbol.remove(), duration * 1000);
+            }
+
+            // Kayan kodlar efekti
+            function createCodeRain() {
+                const codeSnippets = [
+                    'function test() {',
+                    'public class Test {',
+                    'describe("test", () => {',
+                    '@Test public void test() {',
+                    'it("should work", () => {',
+                    'assert.assertEquals(true, true);',
+                    'expect(result).toBe(true);',
+                    'driver.findElement(By.id("test"));',
+                    'WebElement element = wait.until(',
+                    'cy.get(".test").should("exist");',
+                    'browser.element(".test").click();',
+                    'test("should pass", async () => {',
+                    'Given("I am on the page");',
+                    'When("I click the button");',
+                    'Then("I should see results");',
+                    'scenario("Test Login");',
+                    'Feature: Login Page',
+                    'npm run test:e2e',
+                    'mvn clean test',
+                    'gradle test',
+                    'docker-compose up -d',
+                    'git commit -m "test: add tests"',
+                    'yarn jest --coverage',
+                    'pytest -v --html=report.html'
+                ];
+                
+                const code = document.createElement('div');
+                code.className = 'code-rain';
+                code.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+                
+                const startX = Math.random() * window.innerWidth;
+                const duration = 8 + Math.random() * 5;
+                
+                code.style.left = `${startX}px`;
+                code.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(code);
+                setTimeout(() => code.remove(), duration * 1000);
+            }
+
+            // Tüm efektleri belirli aralıklarla oluştur
+            setInterval(createShootingStar, 800);   // Yıldız kayması
+            setInterval(createLightBeam, 3000);     // Işık huzmesi
+            setInterval(createTwinklingStar, 500);  // Parıldayan yıldızlar
+            setInterval(createTechIcon, 1500);      // Teknoloji ikonları
+            setInterval(createCodeSymbol, 2000);    // Kod sembolleri
+            setInterval(createCodeRain, 300);       // Kayan kodlar
+        }
+
+        // Sayfa yüklendiğinde efektleri başlat
+        window.addEventListener('load', createBackgroundEffects);
     </script>
-    <script src="js/main.js"></script>
 </body>
 </html>

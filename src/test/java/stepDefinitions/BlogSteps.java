@@ -88,18 +88,60 @@ public class BlogSteps {
 
     @Then("Menü öğeleri doğru şekilde görüntülenmeli")
     public void menuOgeleriDogruSekildeGoruntulenmeli() {
-        List<WebElement> menuItems = wait.until(
-            ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("nav a"))
-        );
-        Assert.assertTrue("Menü öğeleri görünmüyor", menuItems.size() > 0);
-        
-        // Her menü öğesinin görünür ve tıklanabilir olduğunu kontrol et
-        menuItems.forEach(item -> {
-            Assert.assertTrue("Menü öğesi görünür değil: " + item.getText(), 
-                item.isDisplayed());
-            Assert.assertTrue("Menü öğesi tıklanabilir değil: " + item.getText(), 
-                item.isEnabled());
-        });
+        int viewportWidth = ((Long) ((JavascriptExecutor) driver)
+            .executeScript("return window.innerWidth;")).intValue();
+
+        if (viewportWidth <= 768) {
+            // Mobil menü butonuna tıkla
+            WebElement menuButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.cssSelector(".mobile-menu-button"))
+            );
+            menuButton.click();
+
+            // Kısa bir bekleme ekle
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Mobil menü görünürlüğünü kontrol et
+            WebElement mobileMenu = wait.until(
+                ExpectedConditions.presenceOfElementLocated(By.cssSelector(".mobile-menu"))
+            );
+            String displayStyle = mobileMenu.getCssValue("display");
+            Assert.assertNotEquals("Mobil menü görünür değil", "none", displayStyle);
+
+            // Mobil menü öğelerini kontrol et
+            List<WebElement> menuItems = wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(
+                    By.cssSelector(".mobile-menu .nav-link")
+                )
+            );
+            Assert.assertTrue("Mobil menü öğeleri bulunamadı", menuItems.size() > 0);
+
+            menuItems.forEach(item -> {
+                Assert.assertTrue("Mobil menü öğesi görünür değil: " + item.getText(),
+                    item.isDisplayed());
+                Assert.assertTrue("Mobil menü öğesi tıklanabilir değil: " + item.getText(),
+                    item.isEnabled());
+            });
+        } else {
+            // Desktop menü öğelerini kontrol et
+            List<WebElement> menuItems = wait.until(
+                ExpectedConditions.presenceOfAllElementsLocatedBy(
+                    By.cssSelector(".desktop-menu .nav-link")
+                )
+            );
+            Assert.assertTrue("Desktop menü öğeleri bulunamadı", menuItems.size() > 0);
+
+            menuItems.forEach(item -> {
+                Assert.assertTrue("Desktop menü öğesi görünür değil: " + item.getText(),
+                    item.isDisplayed());
+                Assert.assertTrue("Desktop menü öğesi tıklanabilir değil: " + item.getText(),
+                    item.isEnabled());
+            });
+        }
     }
 
     @When("{string} bölümüne git")
