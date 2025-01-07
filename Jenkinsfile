@@ -183,7 +183,19 @@ pipeline {
         always {
             script {
                 try {
-                    // Allure raporu oluştur
+                    // Allure process'lerini temizle
+                    sh '''
+                        # Allure ve Jetty process'lerini sonlandır
+                        pkill -f "allure" || true
+                        pkill -f "jetty" || true
+                        
+                        # Tüm test portlarını temizle
+                        for port in $(lsof -ti:56951,59373); do
+                            kill -9 $port || true
+                        done
+                    '''
+                    
+                    // Allure raporu oluştur (Jenkins plugin kullanarak)
                     allure([
                         includeProperties: false,
                         jdk: '',
@@ -192,23 +204,15 @@ pipeline {
                         results: [[path: 'target/allure-results']]
                     ])
                     
-                    // Allure process'ini kontrol et ve kapat
-                    sh '''
-                        # Allure process'lerini bul ve sonlandır
-                        pkill -f "allure serve" || true
-                        
-                        # Jetty process'lerini kontrol et ve sonlandır
-                        pkill -f "org.eclipse.jetty" || true
-                        
-                        # Port 56951'i kullanan process'i sonlandır
-                        lsof -ti:56951 | xargs kill -9 || true
-                    '''
-                    
                 } catch (Exception e) {
                     echo "Allure raporu oluşturulurken hata: ${e.message}"
                 } finally {
                     // Test sonuçlarını arşivle
-                    archiveArtifacts artifacts: 'target/**/*', fingerprint: true
+                    archiveArtifacts(
+                        artifacts: 'target/**/*',
+                        fingerprint: true,
+                        allowEmptyArchive: true
+                    )
                     
                     // Blog sunucusunu durdur
                     sh '''
@@ -216,7 +220,12 @@ pipeline {
                     '''
                     
                     // Workspace'i temizle
-                    cleanWs()
+                    cleanWs(
+                        cleanWhenNotBuilt: true,
+                        deleteDirs: true,
+                        disableDeferredWipeout: true,
+                        notFailBuild: true
+                    )
                 }
                 
                 // Test sonuç özeti
@@ -225,12 +234,32 @@ pipeline {
 ║   Test Sonuç Özeti        ║
 ╚═══════════════════════════╝
 
-📝 Raporlar:
-- Allure: ${BUILD_URL}allure/
-- Test Artifacts: ${BUILD_URL}artifact/target/
+📊 Raporlar:
+- 📈 Allure: ${BUILD_URL}allure
+- 📁 Artifacts: ${BUILD_URL}artifact/target/
 
 🎯 Build Durumu: ${currentBuild.result ?: 'SUCCESS'}
 ⏱️ Süre: ${currentBuild.durationString}
+                """
+            }
+        }
+        
+        failure {
+            script {
+                echo """
+❌ Build başarısız oldu!
+- Build URL: ${BUILD_URL}
+- Console Log: ${BUILD_URL}console
+                """
+            }
+        }
+        
+        unstable {
+            script {
+                echo """
+⚠️ Build kararsız durumda!
+- Build URL: ${BUILD_URL}
+- Test Reports: ${BUILD_URL}allure
                 """
             }
         }
