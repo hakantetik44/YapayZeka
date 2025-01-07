@@ -183,19 +183,16 @@ pipeline {
         always {
             script {
                 try {
-                    // Allure process'lerini temizle
+                    // Process'leri temizle
                     sh '''
-                        # Allure ve Jetty process'lerini sonlandır
-                        pkill -f "allure" || true
-                        pkill -f "jetty" || true
-                        
-                        # Tüm test portlarını temizle
-                        for port in $(lsof -ti:56951,59373); do
-                            kill -9 $port || true
-                        done
+                        pkill -f allure || true
+                        pkill -f jetty || true
+                        pkill -f chrome || true
+                        pkill -f chromedriver || true
+                        lsof -ti:${BLOG_PORT} | xargs kill -9 || true
                     '''
                     
-                    // Allure raporu oluştur (Jenkins plugin kullanarak)
+                    // Allure raporu oluştur
                     allure([
                         includeProperties: false,
                         jdk: '',
@@ -204,24 +201,28 @@ pipeline {
                         results: [[path: 'target/allure-results']]
                     ])
                     
-                } catch (Exception e) {
-                    echo "Allure raporu oluşturulurken hata: ${e.message}"
-                } finally {
-                    // Test sonuçlarını arşivle
+                    // Allure raporunu zip'le
+                    sh '''
+                        cd ${WORKSPACE}/allure-report
+                        zip -r ${WORKSPACE}/allure-report.zip ./*
+                    '''
+                    
+                    // Artifact'leri arşivle
                     archiveArtifacts(
-                        artifacts: 'target/**/*',
+                        artifacts: '''
+                            target/**/*,
+                            allure-report.zip
+                        ''',
                         fingerprint: true,
                         allowEmptyArchive: true
                     )
                     
-                    // Blog sunucusunu durdur
-                    sh '''
-                        lsof -ti:${BLOG_PORT} | xargs kill -9 || true
-                    '''
-                    
+                } catch (Exception e) {
+                    echo "Allure raporu oluşturulurken hata: ${e.message}"
+                } finally {
                     // Workspace'i temizle
                     cleanWs(
-                        cleanWhenNotBuilt: true,
+                        cleanWhenNotBuilt: false,
                         deleteDirs: true,
                         disableDeferredWipeout: true,
                         notFailBuild: true
@@ -236,7 +237,7 @@ pipeline {
 
 📊 Raporlar:
 - 📈 Allure: ${BUILD_URL}allure
-- 📁 Artifacts: ${BUILD_URL}artifact/target/
+- 📁 Artifacts: ${BUILD_URL}artifact
 
 🎯 Build Durumu: ${currentBuild.result ?: 'SUCCESS'}
 ⏱️ Süre: ${currentBuild.durationString}
