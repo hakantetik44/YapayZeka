@@ -3,7 +3,6 @@ pipeline {
     
     environment {
         BLOG_PORT = '3000'
-        MAVEN_OPTS = '-Dmaven.test.failure.ignore=true'
     }
     
     tools {
@@ -25,13 +24,13 @@ pipeline {
                     try {
                         sh '''
                             mvn clean install -DskipTests \
-                                -Dmaven.test.failure.ignore=true \
                                 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
                                 -B -V
                         '''
                     } catch (Exception e) {
                         echo "Bağımlılık yükleme hatası: ${e.message}"
                         currentBuild.result = 'UNSTABLE'
+                        throw e
                     }
                 }
             }
@@ -74,10 +73,9 @@ pipeline {
                             mkdir -p target/cucumber-reports
                         '''
                         
-                        // Testleri çalıştır
+                        // Testleri çalıştır - burada test hataları yakalanacak
                         sh '''
                             mvn test \
-                                -Dmaven.test.failure.ignore=true \
                                 -Dtest.env=jenkins \
                                 -Dwebdriver.chrome.whitelistedIps="" \
                                 -Dwebdriver.chrome.verboseLogging=true \
@@ -86,7 +84,8 @@ pipeline {
                         '''
                     } catch (Exception e) {
                         echo "Test çalıştırma hatası: ${e.message}"
-                        currentBuild.result = 'UNSTABLE'
+                        currentBuild.result = 'FAILURE'
+                        throw e
                     }
                 }
             }
@@ -147,9 +146,7 @@ pipeline {
                         archiveArtifacts(
                             artifacts: '''
                                 target/cucumber-reports.zip,
-                                allure-report.zip,
-                                target/allure-results/**/*,
-                                target/cucumber-reports/**/*
+                                allure-report.zip
                             ''',
                             fingerprint: true,
                             allowEmptyArchive: true
