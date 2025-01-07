@@ -94,7 +94,7 @@ pipeline {
                             export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
                             export PATH=\$JAVA_HOME/bin:\$M2_HOME/bin:\$PATH
 
-                            mvn test -Dtest=runner.TestRunner \\
+                            mvn test -Dtest=runners.TestRunner \\
                                 -Dbrowser=${params.BROWSER} \\
                                 -Dcucumber.plugin="pretty,json:target/cucumber.json,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
                         """
