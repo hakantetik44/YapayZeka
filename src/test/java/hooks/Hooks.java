@@ -1,6 +1,7 @@
 package hooks;
 
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
@@ -17,13 +18,17 @@ import java.nio.file.Paths;
 public class Hooks {
     private WebDriver driver;
     private String currentScenarioName;
+    private static boolean isFirstTest = true;
 
     @Before
     public void setUp(Scenario scenario) {
         try {
+            if (isFirstTest) {
+                driver = Driver.getDriver();
+                isFirstTest = false;
+            }
             currentScenarioName = scenario.getName().replaceAll("\\s+", "_");
             VideoRecorder.startRecording(currentScenarioName);
-            driver = Driver.getDriver();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,17 +54,19 @@ public class Hooks {
                     scenario.attach(videoBytes, "video/mp4", "Test Video");
                 } catch (IOException e) {
                     System.err.println("Video dosyası okunamadı: " + e.getMessage());
-                    e.printStackTrace();
                 }
-            } else {
-                System.err.println("Video dosyası bulunamadı: " + videoPath);
             }
-            
         } catch (Exception e) {
             System.err.println("Teardown sırasında hata: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            Driver.closeDriver();
+        }
+    }
+
+    @AfterAll
+    public static void afterAll() {
+        try {
+            Driver.quitDriver();
+        } catch (Exception e) {
+            System.err.println("Driver kapatılırken hata: " + e.getMessage());
         }
     }
     
