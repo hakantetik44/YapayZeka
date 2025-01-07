@@ -18,6 +18,7 @@ pipeline {
         TIMESTAMP = new Date().format('yyyy-MM-dd_HH-mm-ss')
         ALLURE_RESULTS = 'target/allure-results'
         EXCEL_REPORTS = 'target/rapports-tests'
+        BLOG_PORT = '3000'
     }
 
     parameters {
@@ -64,11 +65,45 @@ pipeline {
             }
         }
 
+        stage('Start Blog Server') {
+            steps {
+                script {
+                    try {
+                        echo "🌐 Blog sunucusu başlatılıyor (Port: ${BLOG_PORT})..."
+                        sh """#!/bin/bash
+                            # Eğer port kullanımdaysa, işlemi sonlandır
+                            lsof -ti:${BLOG_PORT} | xargs kill -9 || true
+                            
+                            # Blog klasörüne git ve sunucuyu başlat
+                            cd /Users/hakantetik/Desktop/YapayZeka/blog_old
+                            python3 -m http.server ${BLOG_PORT} > /dev/null 2>&1 &
+                            
+                            # Sunucunun başlamasını bekle
+                            sleep 5
+                            
+                            # Sunucunun çalıştığını kontrol et
+                            curl -s http://localhost:${BLOG_PORT} > /dev/null
+                            if [ $? -eq 0 ]; then
+                                echo "Blog sunucusu başarıyla başlatıldı!"
+                            else
+                                echo "Blog sunucusu başlatılamadı!"
+                                exit 1
+                            fi
+                        """
+                    } catch (Exception e) {
+                        echo "Blog sunucusu başlatılırken hata oluştu: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    }
+                }
+            }
+        }
+
         stage('Construction') {
             steps {
                 script {
                     try {
-                        echo " Bağımlılıklar yükleniyor..."
+                        echo "📦 Bağımlılıklar yükleniyor..."
                         sh '''#!/bin/bash
                             export JAVA_HOME=/Users/hakantetik/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home
                             export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
@@ -88,7 +123,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        echo " Testler başlatılıyor (Headless mod)..."
+                        echo "🧪 Testler başlatılıyor (Headless mod)..."
                         sh """#!/bin/bash
                             export JAVA_HOME=/Users/hakantetik/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home
                             export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
@@ -97,6 +132,7 @@ pipeline {
                             mvn test -Dtest=runners.TestRunner \\
                                 -Dbrowser=${params.BROWSER} \\
                                 -Dheadless=true \\
+                                -DblogUrl=http://localhost:${BLOG_PORT} \\
                                 -Dcucumber.plugin="pretty,json:target/cucumber.json,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
                         """
                     } catch (Exception e) {
@@ -147,17 +183,21 @@ pipeline {
     post {
         always {
             script {
+                // Blog sunucusunu durdur
+                sh "lsof -ti:${BLOG_PORT} | xargs kill -9 || true"
+                
                 echo """╔═══════════════════════════╗
 ║   Test Sonuç Özeti        ║
 ╚═══════════════════════════╝
 
- Raporlar:
+📝 Raporlar:
 - Allure: ${BUILD_URL}allure/
 - Excel: ${BUILD_URL}artifact/${EXCEL_REPORTS}/
 - Cucumber: ${BUILD_URL}artifact/target/cucumber-reports/
 
+Blog URL: http://localhost:${BLOG_PORT}
 Tarayıcı: ${params.BROWSER} (Headless mod)
-${currentBuild.result == 'SUCCESS' ? ' BAŞARILI' : ' BAŞARISIZ'}"""
+${currentBuild.result == 'SUCCESS' ? '✅ BAŞARILI' : '❌ BAŞARISIZ'}"""
             }
             cleanWs notFailBuild: true
         }
