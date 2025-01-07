@@ -6,7 +6,7 @@ pipeline {
     }
     
     tools {
-        maven 'Maven'
+        maven 'maven'
         allure 'Allure'
     }
 
@@ -93,14 +93,15 @@ pipeline {
                         
                         // Cucumber raporunu zip'le
                         sh '''
+                            mkdir -p target/cucumber-reports
                             cd target/cucumber-reports
-                            zip -r ../cucumber-reports.zip ./*
+                            zip -r ../cucumber-reports.zip ./* || true
                         '''
                         
                         // Allure raporunu zip'le
                         sh '''
                             cd ${WORKSPACE}/allure-report
-                            zip -r ../allure-report.zip ./*
+                            zip -r ../allure-report.zip ./* || true
                         '''
                         
                         // Artifact'leri arşivle
