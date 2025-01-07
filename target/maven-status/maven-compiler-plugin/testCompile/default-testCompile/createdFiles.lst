@@ -1,6 +1,0 @@
-pages/BlogPage.class
-utilities/Driver.class
-utilities/VideoRecorder.class
-runners/TestRunner.class
-stepDefinitions/BlogSteps.class
-hooks/Hooks.class
