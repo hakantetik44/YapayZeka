@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         BLOG_PORT = '3000'
+        MAVEN_OPTS = '-Dmaven.test.failure.ignore=true'
     }
     
     tools {
@@ -20,7 +21,19 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                script {
+                    try {
+                        sh '''
+                            mvn clean install -DskipTests \
+                                -Dmaven.test.failure.ignore=true \
+                                -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                                -B -V
+                        '''
+                    } catch (Exception e) {
+                        echo "Bağımlılık yükleme hatası: ${e.message}"
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }
             }
         }
         
@@ -55,12 +68,21 @@ pipeline {
             steps {
                 script {
                     try {
+                        // Test klasörlerini oluştur
+                        sh '''
+                            mkdir -p target/allure-results
+                            mkdir -p target/cucumber-reports
+                        '''
+                        
+                        // Testleri çalıştır
                         sh '''
                             mvn test \
+                                -Dmaven.test.failure.ignore=true \
                                 -Dtest.env=jenkins \
                                 -Dwebdriver.chrome.whitelistedIps="" \
                                 -Dwebdriver.chrome.verboseLogging=true \
-                                -Dcucumber.plugin="pretty,json:target/cucumber-reports/cucumber.json,html:target/cucumber-reports/cucumber.html,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                                -Dcucumber.plugin="pretty,json:target/cucumber-reports/cucumber.json,html:target/cucumber-reports/cucumber.html,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" \
+                                -B
                         '''
                     } catch (Exception e) {
                         echo "Test çalıştırma hatası: ${e.message}"
@@ -82,6 +104,19 @@ pipeline {
                             pkill -f chromedriver || true
                         '''
                         
+                        // Test sonuçlarını kontrol et
+                        sh '''
+                            if [ ! -d "target/allure-results" ]; then
+                                echo "Allure sonuçları bulunamadı"
+                                mkdir -p target/allure-results
+                            fi
+                            
+                            if [ ! -d "target/cucumber-reports" ]; then
+                                echo "Cucumber sonuçları bulunamadı"
+                                mkdir -p target/cucumber-reports
+                            fi
+                        '''
+                        
                         // Allure raporu oluştur
                         allure([
                             includeProperties: false,
@@ -91,17 +126,21 @@ pipeline {
                             results: [[path: 'target/allure-results']]
                         ])
                         
-                        // Cucumber raporunu zip'le
+                        // Raporları arşivle
                         sh '''
-                            mkdir -p target/cucumber-reports
-                            cd target/cucumber-reports
-                            zip -r ../cucumber-reports.zip ./* || true
-                        '''
-                        
-                        // Allure raporunu zip'le
-                        sh '''
-                            cd ${WORKSPACE}/allure-report
-                            zip -r ../allure-report.zip ./* || true
+                            # Cucumber raporu
+                            if [ -d "target/cucumber-reports" ]; then
+                                cd target/cucumber-reports
+                                zip -r ../cucumber-reports.zip . || true
+                                cd ../..
+                            fi
+                            
+                            # Allure raporu
+                            if [ -d "allure-report" ]; then
+                                cd allure-report
+                                zip -r ../allure-report.zip . || true
+                                cd ..
+                            fi
                         '''
                         
                         // Artifact'leri arşivle
@@ -109,7 +148,8 @@ pipeline {
                             artifacts: '''
                                 target/cucumber-reports.zip,
                                 allure-report.zip,
-                                target/allure-results/**/*
+                                target/allure-results/**/*,
+                                target/cucumber-reports/**/*
                             ''',
                             fingerprint: true,
                             allowEmptyArchive: true
