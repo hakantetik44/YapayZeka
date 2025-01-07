@@ -1,353 +1,237 @@
-# 🌟 Blog Test Otomasyon Projesi 🚀
+# 🌟 Blog Test Otomasyon Projesi 🌟
 
 <div align="center">
-  <h1>
-    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Rocket.png" alt="Rocket" width="25" height="25" />
-    Modern Blog Test Otomasyonu
-    <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" alt="Laptop" width="25" height="25" />
-  </h1>
 
-  <p>
+  <!-- Ana Banner -->
+  <img src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/blob/main/assets/wave.gif" width="500" />
+  
+  <br><br>
+  
+  <!-- Teknoloji Logoları -->
+  <p align="center">
+    <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="selenium" />
+    <img src="https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white" alt="cucumber" />
+    <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" alt="jenkins" />
+    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="java" />
+    <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white" alt="maven" />
+  </p>
+  
+  <!-- Proje Durumu -->
+  <p align="center">
+    <img src="https://img.shields.io/github/last-commit/hakantetik44/YapayZeka?style=for-the-badge&color=blue" alt="last-commit" />
+    <img src="https://img.shields.io/github/license/hakantetik44/YapayZeka?style=for-the-badge&color=green" alt="license" />
     <img src="https://img.shields.io/github/stars/hakantetik44/YapayZeka?style=for-the-badge&color=yellow" alt="stars" />
-    <img src="https://img.shields.io/github/forks/hakantetik44/YapayZeka?style=for-the-badge&color=blue" alt="forks" />
-    <img src="https://img.shields.io/github/issues/hakantetik44/YapayZeka?style=for-the-badge&color=red" alt="issues" />
   </p>
-
-  <p>
-    <img src="https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white" alt="Cucumber" />
-    <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="Selenium" />
-    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java" />
-    <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white" alt="Maven" />
-    <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white" alt="JUnit5" />
-    <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
-  </p>
+  
+  <!-- Animasyonlu Slogan -->
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=500&size=40&pause=1000&color=3498DB&center=true&vCenter=true&width=600&height=100&lines=🚀+Test+Automation;🎯+Selenium+%2B+Cucumber;📊+Detailed+Reports" alt="Typing SVG" />
+  
+  <!-- Dekoratif Çizgi -->
+  <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+  
+  <br>
+  
+  <!-- Proje Özeti -->
+  <table align="center">
+    <tr>
+      <td>
+        <img align="left" src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/blob/main/assets/Point_Down.gif" width="100px">
+      </td>
+      <td>
+        <h3>🎯 Modern Blog Test Otomasyonu</h3>
+        <p>Selenium WebDriver, Cucumber ve Allure Reports ile geliştirilmiş,<br>kapsamlı bir test otomasyon projesi.</p>
+      </td>
+    </tr>
+  </table>
+  
+  <!-- Test İstatistikleri -->
+  <table align="center">
+    <tr>
+      <td align="center" width="150">
+        <img src="https://github.com/Anmol-Baranwal/Cool-GIFs-For-GitHub/blob/main/assets/Designer.gif" width="50">
+        <br>
+        <strong>100+</strong>
+        <br>
+        Test Senaryosu
+      </td>
+      <td align="center" width="150">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Travel%20and%20places/High%20Voltage.png" width="50">
+        <br>
+        <strong>3 sn</strong>
+        <br>
+        Yükleme Hızı
+      </td>
+      <td align="center" width="150">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Microsoft-Teams-Animated-Emojis/master/Emojis/Objects/Mobile%20Phone.png" width="50">
+        <br>
+        <strong>4+</strong>
+        <br>
+        Ekran Boyutu
+      </td>
+    </tr>
+  </table>
+  
+  <!-- Dekoratif Çizgi -->
+  <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 </div>
 
-## 🎯 Proje Hakkında
+## 🎨 Özellikler
 
-Bu proje, [Blog URL'niz] adresindeki blog web sitesinin kapsamlı test otomasyonunu içerir. Cucumber BDD yaklaşımı ile yazılmış, Selenium WebDriver kullanan ve Allure raporlama araçları ile desteklenen modern bir test framework'üdür.
+- 🚀 Hızlı ve güvenilir test otomasyonu
+- 📱 Responsive tasarım testleri
+- 📊 Detaylı raporlama
+- 🎥 Otomatik video kayıt
+- 📸 Hata anında screenshot
+- 🔄 CI/CD entegrasyonu
 
-### 🔗 Önemli Linkler
+## 🛠️ Kullanılan Teknolojiler
 
-- 📂 GitHub Repo: [https://github.com/hakantetik44/YapayZeka](https://github.com/hakantetik44/YapayZeka)
-- 🌐 Test Edilen Site: [Blog URL'niz]
-- 📊 Jenkins Dashboard: [Jenkins URL'niz]
-- 📝 Allure Raporları: [Allure Rapor URL'niz]
+### 🧪 Test Framework
+- 🎯 Selenium WebDriver (4.15.0)
+  - 🔒 ThreadLocal WebDriver yönetimi
+  - ⚙️ Chrome options optimizasyonu
+  - ⏱️ Implicit & Explicit wait mekanizmaları
 
-## 📋 İçindekiler
+- 🥒 Cucumber (7.14.0)
+  - 📝 BDD yaklaşımı
+  - 🔄 Scenario Outline desteği
+  - 📊 DataTable kullanımı
+  - 🎣 Hooks yapılandırması
 
-- Özellikler
-- Gereksinimler
-- Kurulum
-- Testleri Çalıştırma
-- Raporlama
-- Video Kaydı
-- Proje Yapısı
-- Kullanılan Teknolojiler
-- Blog Sayfası Geliştirme Süreci
-- Katkıda Bulunma
-- Test Senaryoları
-- Konfigürasyon
-- Hata Ayıklama
-- İletişim
-- Lisans
+- 📈 Allure Reports (2.24.0)
+  - 📊 Test adımları detayları
+  - 📸 Screenshot entegrasyonu
+  - 🎥 Video kayıt desteği
+  - ❌ Hata detayları
 
-## 🎯 Özellikler
+- 🎬 Monte Screen Recorder (0.7.7)
+  - 📹 AVI formatında kayıt
+  - 🎞️ MP4 dönüşümü
+  - 🖥️ Browser pencere takibi
 
-- ✨ Cucumber BDD yaklaşımı ile okunabilir test senaryoları
-- 📝 Gherkin dili ile yazılmış feature dosyaları
-- 🎥 Test senaryolarının video kaydı
-- 📸 Hata durumunda ekran görüntüsü alma
-- 📊 Allure ile detaylı raporlama
-- 🔄 Page Object Model (POM) tasarım deseni
-- 🌐 Cross-browser testing desteği
+### 🎨 Frontend
+- 🖌️ HTML5 & Tailwind CSS
+  - 🌟 Glass effect tasarım
+  - 📱 Responsive layout
+  - ✨ Custom animasyonlar
 
-## ⚙️ Gereksinimler
+- 🌐 JavaScript
+  - 🚀 ES6+ özellikleri
+  - 🎯 DOM manipülasyonu
+  - 🎭 Event listener yönetimi
 
-- ☕ Java JDK 8 veya üzeri
-- 📦 Maven
-- 🌐 Chrome/Firefox/Edge tarayıcılarından biri
-- 💻 IntelliJ IDEA (önerilen) veya başka bir IDE
-
-## 📦 Kurulum
-
-1. Projeyi klonlayın:
-```bash
-git clone [proje-url]
-cd [proje-klasörü]
-```
-
-2. Gerekli bağımlılıkları yükleyin:
-```bash
-mvn clean install
-```
-
-3. Allure'u yükleyin (macOS için):
-```bash
-brew install allure
-```
-
-Windows için Scoop kullanarak:
-```bash
-scoop install allure
-```
-
-## 🏃‍♂️ Testleri Çalıştırma
-
-Tüm testleri çalıştırmak için:
-```bash
-mvn clean test
-```
-
-Belirli bir tag'e sahip testleri çalıştırmak için:
-```bash
-mvn clean test -Dcucumber.filter.tags="@smoke"
-```
-
-## 📊 Raporlama
-
-Test çalıştırıldıktan sonra Allure raporu otomatik olarak açılacaktır. Manuel olarak raporu görüntülemek için:
-
-```bash
-allure serve target/allure-results
-```
-
-## 🎥 Video Kaydı
-
-Framework, her test senaryosu için otomatik olarak video kaydı alır:
-
-- Kayıtlar otomatik olarak başlar
-- Test bitiminde kayıt durur
-- AVI formatından MP4'e otomatik dönüşüm
-- Kayıtlar Allure raporuna otomatik eklenir
+### ⚙️ CI/CD
+- 🔄 Jenkins Pipeline
+  - 📦 Multi-stage yapı
+  - ⚡ Parallel test execution
+  - 🔀 Conditional steps
 
 ## 📁 Proje Yapısı
 
 ```
-src
-├── test
-│   ├── java
-│   │   ├── hooks          # Test hooks ve konfigürasyonlar
-│   │   ├── pages         # Page Object Model sınıfları
-│   │   ├── runners       # Cucumber test runner
-│   │   ├── stepDefs      # Step definition sınıfları
-│   │   └── utilities    # Yardımcı sınıflar
-│   └── resources
-│       ├── features     # Cucumber feature dosyaları
-│       └── config       # Konfigürasyon dosyaları
+src/
+├── test/
+│   ├── java/
+│   │   ├── hooks/
+│   │   │   └── Hooks.java           # 🎣 Test yaşam döngüsü
+│   │   ├── runners/
+│   │   │   └── TestRunner.java      # 🏃 Cucumber konfigürasyonu
+│   │   ├── stepDefinitions/
+│   │   │   └── BlogSteps.java       # 📝 Test adımları
+│   │   └── utilities/
+│   │       ├── Driver.java          # 🚗 WebDriver yönetimi
+│   │       └── VideoRecorder.java   # 🎥 Video kayıt sistemi
+│   └── resources/
+│       ├── features/
+│       │   └── blog.feature         # 📋 Test senaryoları
+│       └── extent.properties        # ⚙️ Rapor ayarları
+└── blog/
+    ├── index.html                   # 🌐 Blog ana sayfası
+    └── css/
+        └── style.css                # 🎨 Tailwind & custom stiller
 ```
 
-## 🤖 Kullanılan Teknolojiler
+## 🎯 Test Senaryoları
 
-- 🎯 Cucumber 7.14.0
-- 🌐 Selenium WebDriver
-- 📊 Allure Framework 2.24.0
-- 📹 Monte Screen Recorder
-- 📊 JUnit 5
-- 📦 Maven
+### 📱 Responsive Tasarım Testleri
+- 🖥️ Desktop (1920x1080)
+- 💻 Laptop (1366x768)
+- 📱 Tablet (1024x768)
+- 📱 Mobile (375x812)
 
-## 🎨 Blog Sayfası Geliştirme Süreci
+### ⚡ Sayfa Yükleme Testleri
+- ⏱️ Sayfa yükleme süresi kontrolü (3 sn)
+- 🌐 DOM hazır olma durumu
+- 📜 JavaScript yükleme kontrolü
 
-### 🛠️ Kullanılan Teknolojiler ve Araçlar
-- 🎨 Frontend:
-  - 📱 HTML5 & CSS3
-  - ⚡ JavaScript (ES6+)
-  - 🅱️ Bootstrap 5
-  - 🎯 Font Awesome 6
-  - 🎪 Animate.css
-  - 🎭 SASS/SCSS
-  - 📦 Webpack
-  - 🔄 Babel
+### 📝 Form Testleri
+- 👁️ Alan görünürlük kontrolleri
+- ✍️ Veri girişi validasyonları
+- 📤 Submit işlem kontrolü
 
-### ✨ Blog Sayfası Özellikleri
-- 📱 Responsive Tasarım
-  - 💻 Desktop
-  - 📱 Tablet
-  - 📱 Mobile
-- 📝 Blog İşlemleri
-  - ✍️ Yazı Oluşturma
-  - 🔄 Düzenleme
-  - 🗑️ Silme
-  - 📌 Pinleme
-- 👤 Kullanıcı Sistemi
-  - 🔐 JWT Auth
-  - 👥 Rol Yönetimi
-  - 🔑 OAuth2 Desteği
-- 🎨 Görsel Özellikler
-  - 🌙 Dark/Light Mode
-  - 🎨 Tema Seçenekleri
-  - 🖼️ Responsive Görseller
-- 🔍 Arama ve Filtreleme
-  - 🏷️ Etiket Sistemi
-  - 📂 Kategori Filtreleme
-  - 📅 Tarih Bazlı Arama
-- 💬 Etkileşim
-  - 💭 Yorumlar
-  - 👍 Beğeni Sistemi
-  - 🔔 Bildirimler
-- 📊 Admin Paneli
-  - 📈 İstatistikler
-  - 👥 Kullanıcı Yönetimi
-  - 📝 İçerik Yönetimi
-- 🌍 Çoklu Dil
-  - 🇹🇷 Türkçe
-  - 🇺🇸 İngilizce
-  - 🇩🇪 Almanca
+## 🚀 Kurulum ve Çalıştırma
 
-### 🎯 Test Kapsamı
-- 🏃‍♂️ Smoke Tests
-  - ✅ Kritik Fonksiyonlar
-  - 🔐 Login/Logout
-  - 📝 Temel CRUD
-- 🔄 Regression Tests
-  - 📱 Cross-Browser
-  - 🖥️ Cross-Platform
-  - 📱 Responsive
-- ⚡ Performance Tests
-  - 🚀 Sayfa Yüklenme
-  - 📊 API Response
-  - 🗃️ DB Queries
+### 📋 Gereksinimler
+- ☕ Java 17
+- 🏗️ Maven
+- 🌐 Chrome Browser
+- 🐍 Python 3 (Blog sunucusu için)
 
-## 🤝 Katkıda Bulunma
-
-1. Fork yapın
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request oluşturun
-
-## 📝 Test Senaryoları
-
-Framework'te şu an için aşağıdaki test senaryoları bulunmaktadır:
-
-1. Ana Sayfa Testleri
-   - Header menü kontrolü
-   - Footer link kontrolü
-   - Sosyal medya ikonları kontrolü
-
-2. Blog Testleri
-   - Blog listesi görüntüleme
-   - Blog detay sayfası kontrolü
-   - Blog arama fonksiyonu
-
-3. Hakkımda Sayfası Testleri
-   - Sayfa yükleme kontrolü
-   - İçerik doğrulama
-   - İletişim formu kontrolü
-
-## 📁 Konfigürasyon
-
-`config.properties` dosyasında aşağıdaki ayarları özelleştirebilirsiniz:
-
-```properties
-browser=chrome
-headless=false
-timeout=30
-baseUrl=http://example.com
-```
-
-## 🔍 Hata Ayıklama
-
-Test çalışması sırasında:
-- Ekran görüntüleri `target/screenshots` klasörüne kaydedilir
-- Video kayıtları `target/allure-results` klasörüne kaydedilir
-- Log dosyaları `target/logs` klasöründe bulunur
-
-## 📲 İletişim
-
-Sorularınız için: [email-adresi]
-
-## 📜 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakınız.
-
-## 🔍 Test Senaryoları Detayları
-
-### 📝 Ana Sayfa Testleri
-- ✅ Sayfa başlığı doğrulama
-- ✅ Meta etiketleri kontrolü
-- ✅ Responsive tasarım kontrolü
-- ✅ Navigasyon menüsü kontrolü
-
-### 👤 Hakkımda Bölümü Testleri
-- ✅ Bölüm başlığı kontrolü
-- ✅ Profil resmi görünürlüğü
-- ✅ Sosyal medya bağlantıları
-- ✅ CV indirme linki kontrolü
-
-### 💼 Projeler Bölümü Testleri
-- ✅ Proje kartları görünürlüğü
-- ✅ Proje detayları kontrolü
-- ✅ GitHub bağlantıları
-- ✅ Demo linkleri kontrolü
-
-### 🎯 Yetenekler Bölümü Testleri
-- ✅ Yetenek kategorileri kontrolü
-- ✅ Progress bar görünürlüğü
-- ✅ Animasyon kontrolü
-- ✅ Tooltip kontrolü
-
-## 🚀 CI/CD Pipeline Detayları
-
-### 📊 Jenkins Pipeline Aşamaları
-```groovy
-// Jenkins Pipeline Aşamaları
-1. Checkout
-2. Build
-3. Test
-4. Report
-5. Deploy
-```
-
-### 🔄 Otomatik Test Çalıştırma
-- 🌙 Gece yarısı testleri
-- 🔄 Pull request kontrolleri
-- 📊 Periyodik test raporları
-- 🚨 Hata bildirimleri
-
-## 🎯 Test Metrikleri
-
-### 📊 Kapsam Analizi
-- ✅ Statement Coverage: 85%
-- ✅ Branch Coverage: 80%
-- ✅ Function Coverage: 90%
-- ✅ Line Coverage: 88%
-
-### ⏱️ Performans Metrikleri
-- ⚡ Ortalama test süresi: 2.5 dakika
-- 🎯 Test başarı oranı: 98%
-- 🔄 Yeniden çalıştırma oranı: 2%
-- 📈 Haftalık test sayısı: ~1000
-
-## 🐛 Hata Ayıklama Kılavuzu
-
-### 🔍 Yaygın Hatalar ve Çözümleri
-1. **Element Not Found Hatası**
-   ```java
-   org.openqa.selenium.NoSuchElementException
-   ```
-   - ✅ Çözüm: Wait mekanizmalarını kontrol edin
-   - ✅ Element locator'ları güncelleyin
-   - ✅ Sayfa yüklenme durumunu kontrol edin
-
-2. **Timeout Hataları**
-   ```java
-   org.openqa.selenium.TimeoutException
-   ```
-   - ✅ Network bağlantısını kontrol edin
-   - ✅ Wait sürelerini artırın
-   - ✅ Sayfa performansını optimize edin
-
-### 🔧 Debug Modunda Çalıştırma
+### 📝 Adımlar
+1. Projeyi klonlayın:
 ```bash
-mvn test -Ddebug=true
+git clone https://github.com/hakantetik44/YapayZeka.git
+cd YapayZeka
 ```
 
-## 📱 Cross-Browser Test Matrisi
+2. Bağımlılıkları yükleyin:
+```bash
+mvn clean install
+```
 
-| Browser | Version | OS      | Priority |
-|---------|---------|---------|----------|
-| Chrome  | 120+    | Windows | High     |
-| Firefox | 119+    | macOS   | High     |
-| Safari  | 17+     | macOS   | Medium   |
-| Edge    | 120+    | Windows | Medium   |
+3. Blog sunucusunu başlatın:
+```bash
+cd blog
+python3 -m http.server 3000
+```
+
+4. Testleri çalıştırın:
+```bash
+mvn test
+```
+
+## 📊 Raporlama
+
+### 📈 Allure Reports
+- 📊 Test sonuçları ve detayları
+- 📝 Step-by-step execution
+- 🎥 Screenshot & video kayıtları
+- ❌ Hata analizleri
+
+### 🥒 Cucumber Reports
+- 📋 Feature bazlı sonuçlar
+- 📝 Senaryo detayları
+- 📊 Data table görüntüleme
+
+## 👨‍💻 Geliştirici
+
+<div align="center">
+  <img src="https://avatars.githubusercontent.com/hakantetik44" width="100" style="border-radius: 50%;" />
+  
+  <h3>👤 Hakan Tetik</h3>
+  
+  <p>
+    <a href="https://www.linkedin.com/in/hakan-tetik/">
+      <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+    </a>
+    <a href="https://github.com/hakantetik44">
+      <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+    </a>
+  </p>
+  
+  🎯 SDET & Test Automation Engineer
+</div>
+
+## 📝 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır.
