@@ -1,0 +1,108 @@
+pipeline {
+    agent any
+    
+    environment {
+        // GitHub repository bilgileri
+        GITHUB_REPO = 'your-github-repo-url'
+        BRANCH = 'main'
+        
+        // Deployment bilgileri
+        DEPLOY_DIR = '/var/www/html'
+        BACKUP_DIR = '/var/www/backup'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // GitHub'dan kodu çek
+                git branch: "${BRANCH}", url: "${GITHUB_REPO}"
+            }
+        }
+        
+        stage('Code Quality') {
+            steps {
+                // HTML ve CSS doğrulama
+                sh 'npm install -g htmlhint'
+                sh 'htmlhint *.html'
+                
+                // JavaScript linting
+                sh 'npm install -g eslint'
+                sh 'eslint *.js'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                // Gerekli bağımlılıkları yükle
+                sh 'npm install'
+                
+                // Statik dosyaları optimize et
+                sh 'npm run build'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Temel sayfa testi
+                sh '''
+                    curl -f http://localhost:8080 || exit 1
+                    echo "Basic health check passed"
+                '''
+            }
+        }
+        
+        stage('Backup') {
+            steps {
+                // Mevcut siteyi yedekle
+                sh """
+                    timestamp=\$(date +%Y%m%d_%H%M%S)
+                    mkdir -p ${BACKUP_DIR}/\${timestamp}
+                    cp -r ${DEPLOY_DIR}/* ${BACKUP_DIR}/\${timestamp}/ || true
+                """
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                // Yeni sürümü deploy et
+                sh """
+                    rm -rf ${DEPLOY_DIR}/*
+                    cp -r ./* ${DEPLOY_DIR}/
+                    chmod -R 755 ${DEPLOY_DIR}
+                """
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Deployment başarılı!'
+            // Başarılı deployment bildirimi gönder
+            emailext (
+                subject: "Pipeline Başarılı: ${currentBuild.fullDisplayName}",
+                body: "Blog sayfası başarıyla deploy edildi.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+        }
+        failure {
+            echo 'Deployment başarısız!'
+            // Hata bildirimi gönder
+            emailext (
+                subject: "Pipeline Başarısız: ${currentBuild.fullDisplayName}",
+                body: "Blog sayfası deployment'ında hata oluştu.",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+            
+            // Hata durumunda yedekten geri yükle
+            sh """
+                latest_backup=\$(ls -t ${BACKUP_DIR} | head -1)
+                if [ ! -z "\${latest_backup}" ]; then
+                    rm -rf ${DEPLOY_DIR}/*
+                    cp -r ${BACKUP_DIR}/\${latest_backup}/* ${DEPLOY_DIR}/
+                    chmod -R 755 ${DEPLOY_DIR}
+                    echo "Restored from backup \${latest_backup}"
+                fi
+            """
+        }
+    }
+}
