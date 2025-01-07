@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         // GitHub repository bilgileri
-        GITHUB_REPO = 'your-github-repo-url'
+        GITHUB_REPO = 'https://github.com/hakantetik44/YapayZeka.git'
         BRANCH = 'main'
         
         // Deployment bilgileri
