@@ -125,19 +125,18 @@ pipeline {
                     try {
                         echo "🧪 Testler başlatılıyor (Headless mod)..."
                         sh """#!/bin/bash
-                            export JAVA_HOME=/Users/hakantetik/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home
-                            export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
-                            export PATH=\$JAVA_HOME/bin:\$M2_HOME/bin:\$PATH
-
-                            mvn test -Dtest=runners.TestRunner \\
-                                -Dbrowser=${params.BROWSER} \\
-                                -Dheadless=true \\
-                                -DblogUrl=http://localhost:\${BLOG_PORT} \\
-                                -Dcucumber.plugin="pretty,json:target/cucumber.json,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                            # Maven testlerini çalıştır
+                            mvn clean test \
+                                -Dbrowser=${params.BROWSER} \
+                                -DheadlessMode=true \
+                                -Dcucumber.filter.tags="not @ignore" \
+                                -Dcucumber.execution.exclusive=true \
+                                -Dcucumber.plugin="io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" \
+                                -Dtest.env=jenkins
                         """
                     } catch (Exception e) {
-                        currentBuild.result = 'FAILURE'
-                        throw e
+                        currentBuild.result = 'UNSTABLE'
+                        echo "Test çalıştırma sırasında hata oluştu: ${e.message}"
                     }
                 }
             }

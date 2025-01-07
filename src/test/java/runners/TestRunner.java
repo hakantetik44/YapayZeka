@@ -2,8 +2,8 @@ package runners;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
 import org.junit.AfterClass;
+import org.junit.runner.RunWith;
 import java.io.IOException;
 
 @RunWith(Cucumber.class)
@@ -15,7 +15,10 @@ import java.io.IOException;
         "html:target/cucumber-reports/cucumber.html",
         "json:target/cucumber-reports/cucumber.json",
         "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
-    }
+    },
+    monochrome = true,
+    dryRun = false,
+    publish = false
 )
 public class TestRunner {
     @AfterClass
