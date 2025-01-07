@@ -23,20 +23,9 @@
 hs_err_pid*
 replay_pid*
 
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-
 # IDE files
 .idea/
+.vscode/
 *.iml
 *.iws
 *.ipr
@@ -53,30 +42,63 @@ buildNumber.properties
 # Thumbnails
 ._*
 
-# Test output
-test-output/
-allure-results/
+# Build output
+target/
+build/
+out/
+bin/
+
+# Logs
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+.npm/
+
+# OS files
+Thumbs.db
+
+# Test files
 screenshots/
 videos/
 *.mp4
 *.avi
 
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Environment variables
+# Environment files
 .env
 .env.local
 .env.*.local
 
-# Allure
-.allure/
-allure-report/
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/
+mvnw
+mvnw.cmd
 
 # Selenium
 geckodriver.log
 chromedriver.log
+*.exe
+geckodriver*
+chromedriver*
+IEDriverServer*
+MicrosoftWebDriver*
+
+# Other
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
