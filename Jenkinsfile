@@ -44,15 +44,15 @@ pipeline {
                         # Set up environment variables explicitly
                         export JAVA_HOME=/Users/hakantetik/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home
                         export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
-                        export PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH
+                        export PATH=\$JAVA_HOME/bin:\$M2_HOME/bin:\$PATH
 
                         # Create directories
-                        mkdir -p ${EXCEL_REPORTS} ${ALLURE_RESULTS} target/screenshots
+                        mkdir -p \${EXCEL_REPORTS} \${ALLURE_RESULTS} target/screenshots
 
                         # Print environment info
-                        echo "JAVA_HOME: $JAVA_HOME"
-                        echo "M2_HOME: $M2_HOME"
-                        echo "PATH: $PATH"
+                        echo "JAVA_HOME: \$JAVA_HOME"
+                        echo "M2_HOME: \$M2_HOME"
+                        echo "PATH: \$PATH"
 
                         # Verify Java and Maven
                         echo "Java version:"
@@ -72,18 +72,18 @@ pipeline {
                         echo "🌐 Blog sunucusu başlatılıyor (Port: ${BLOG_PORT})..."
                         sh """#!/bin/bash
                             # Eğer port kullanımdaysa, işlemi sonlandır
-                            lsof -ti:${BLOG_PORT} | xargs kill -9 || true
+                            lsof -ti:\${BLOG_PORT} | xargs kill -9 || true
                             
                             # Blog klasörüne git ve sunucuyu başlat
                             cd /Users/hakantetik/Desktop/YapayZeka/blog_old
-                            python3 -m http.server ${BLOG_PORT} > /dev/null 2>&1 &
+                            python3 -m http.server \${BLOG_PORT} > /dev/null 2>&1 &
                             
                             # Sunucunun başlamasını bekle
                             sleep 5
                             
                             # Sunucunun çalıştığını kontrol et
-                            curl -s http://localhost:${BLOG_PORT} > /dev/null
-                            if [ $? -eq 0 ]; then
+                            curl -s http://localhost:\${BLOG_PORT} > /dev/null
+                            if [ \$? -eq 0 ]; then
                                 echo "Blog sunucusu başarıyla başlatıldı!"
                             else
                                 echo "Blog sunucusu başlatılamadı!"
@@ -107,7 +107,7 @@ pipeline {
                         sh '''#!/bin/bash
                             export JAVA_HOME=/Users/hakantetik/Library/Java/JavaVirtualMachines/corretto-17.0.13/Contents/Home
                             export M2_HOME=/usr/local/Cellar/maven/3.9.9/libexec
-                            export PATH=$JAVA_HOME/bin:$M2_HOME/bin:$PATH
+                            export PATH=\$JAVA_HOME/bin:\$M2_HOME/bin:\$PATH
 
                             mvn clean install -DskipTests
                         '''
@@ -132,7 +132,7 @@ pipeline {
                             mvn test -Dtest=runners.TestRunner \\
                                 -Dbrowser=${params.BROWSER} \\
                                 -Dheadless=true \\
-                                -DblogUrl=http://localhost:${BLOG_PORT} \\
+                                -DblogUrl=http://localhost:\${BLOG_PORT} \\
                                 -Dcucumber.plugin="pretty,json:target/cucumber.json,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
                         """
                     } catch (Exception e) {
@@ -184,7 +184,7 @@ pipeline {
         always {
             script {
                 // Blog sunucusunu durdur
-                sh "lsof -ti:${BLOG_PORT} | xargs kill -9 || true"
+                sh "lsof -ti:\${BLOG_PORT} | xargs kill -9 || true"
                 
                 echo """╔═══════════════════════════╗
 ║   Test Sonuç Özeti        ║
