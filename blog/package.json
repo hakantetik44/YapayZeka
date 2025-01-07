@@ -1,27 +1,22 @@
 {
-  "name": "blog",
-  "version": "0.1.0",
-  "private": true,
+  "name": "hakan-tetik-blog",
+  "version": "1.0.0",
+  "description": "Hakan Tetik Personal Blog",
+  "main": "index.html",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run optimize-css && npm run optimize-js",
+    "optimize-css": "cleancss -o dist/styles.min.css styles.css",
+    "optimize-js": "uglifyjs script.js -o dist/script.min.js",
+    "lint": "eslint *.js && htmlhint *.html"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.1.3"
+    "tailwindcss": "^2.2.19"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.3",
-    "@eslint/eslintrc": "^3"
+    "clean-css-cli": "^5.6.2",
+    "eslint": "^8.0.0",
+    "htmlhint": "^1.1.4",
+    "uglify-js": "^3.17.4"
   }
 }
