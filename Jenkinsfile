@@ -68,6 +68,7 @@ pipeline {
                         sh '''
                             mvn test \
                                 -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                                -Dcucumber.plugin="pretty,html:target/cucumber-reports/cucumber.html,json:target/cucumber-reports/cucumber.json,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" \
                                 -B -V
                         '''
                     } catch (Exception e) {
@@ -89,6 +90,12 @@ pipeline {
                                 kill -9 $(cat blog/.blog-server.pid) || true
                                 rm blog/.blog-server.pid
                             fi
+                        '''
+                        
+                        // Cucumber raporlarını kopyala
+                        sh '''
+                            mkdir -p target/allure-results/cucumber
+                            cp target/cucumber-reports/* target/allure-results/cucumber/ || true
                         '''
                         
                         // Allure raporu oluştur
@@ -127,8 +134,11 @@ pipeline {
                     passed: junitResults.passCount
                 ]
                 
-                // Allure raporlarını arşivle
-                archiveArtifacts allowEmptyArchive: true, artifacts: 'target/allure-results/**/*.*'
+                // Allure ve Cucumber raporlarını arşivle
+                archiveArtifacts allowEmptyArchive: true, artifacts: '''
+                    target/allure-results/**/*.*,
+                    target/cucumber-reports/**/*.*
+                '''
                 
                 // Test sonuç özetini oluştur
                 def summary = """
