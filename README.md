@@ -1,4 +1,4 @@
-# 🌟 Blog Otomasyon Projesi 🚀
+# 🌟 Blog Test Otomasyon Projesi 🚀
 
 <div align="center">
   <h1>
@@ -6,16 +6,33 @@
     Modern Blog Test Otomasyonu
     <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Laptop.png" alt="Laptop" width="25" height="25" />
   </h1>
+
+  <p>
+    <img src="https://img.shields.io/github/stars/hakantetik44/YapayZeka?style=for-the-badge&color=yellow" alt="stars" />
+    <img src="https://img.shields.io/github/forks/hakantetik44/YapayZeka?style=for-the-badge&color=blue" alt="forks" />
+    <img src="https://img.shields.io/github/issues/hakantetik44/YapayZeka?style=for-the-badge&color=red" alt="issues" />
+  </p>
+
+  <p>
+    <img src="https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white" alt="Cucumber" />
+    <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="Selenium" />
+    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java" />
+    <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white" alt="Maven" />
+    <img src="https://img.shields.io/badge/JUnit5-25A162?style=for-the-badge&logo=junit5&logoColor=white" alt="JUnit5" />
+    <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
+  </p>
 </div>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Cucumber-23D96C?style=for-the-badge&logo=cucumber&logoColor=white" alt="Cucumber" />
-  <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="Selenium" />
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white" alt="Java" />
-  <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven&logoColor=white" alt="Maven" />
-</p>
+## 🎯 Proje Hakkında
 
-Bu proje, blog web sitesinin otomatik testlerini içeren bir test otomasyon framework'üdür. 🎯 Cucumber BDD, 🌐 Selenium WebDriver ve 📊 Allure raporlama araçlarını kullanmaktadır.
+Bu proje, [Blog URL'niz] adresindeki blog web sitesinin kapsamlı test otomasyonunu içerir. Cucumber BDD yaklaşımı ile yazılmış, Selenium WebDriver kullanan ve Allure raporlama araçları ile desteklenen modern bir test framework'üdür.
+
+### 🔗 Önemli Linkler
+
+- 📂 GitHub Repo: [https://github.com/hakantetik44/YapayZeka](https://github.com/hakantetik44/YapayZeka)
+- 🌐 Test Edilen Site: [Blog URL'niz]
+- 📊 Jenkins Dashboard: [Jenkins URL'niz]
+- 📝 Allure Raporları: [Allure Rapor URL'niz]
 
 ## 📋 İçindekiler
 
@@ -133,45 +150,63 @@ src
 
 ### 🛠️ Kullanılan Teknolojiler ve Araçlar
 - 🎨 Frontend:
-  - 📱 HTML5
-  - 🎭 CSS3
-  - ⚡ JavaScript
-  - 🅱️ Bootstrap 5 (Responsive tasarım için)
-  - 🎯 Font Awesome (İkonlar için)
+  - 📱 HTML5 & CSS3
+  - ⚡ JavaScript (ES6+)
+  - 🅱️ Bootstrap 5
+  - 🎯 Font Awesome 6
+  - 🎪 Animate.css
+  - 🎭 SASS/SCSS
+  - 📦 Webpack
+  - 🔄 Babel
 
 ### ✨ Blog Sayfası Özellikleri
-- 📱 Responsive tasarım (Mobil uyumlu)
-- 📝 Blog yazıları ekleme ve düzenleme
-- 👤 Kullanıcı profil sayfası
-- 🔍 Arama fonksiyonu
-- 🏷️ Kategori ve etiket sistemi
-- 💬 Yorum sistemi
-- 📊 Admin paneli
+- 📱 Responsive Tasarım
+  - 💻 Desktop
+  - 📱 Tablet
+  - 📱 Mobile
+- 📝 Blog İşlemleri
+  - ✍️ Yazı Oluşturma
+  - 🔄 Düzenleme
+  - 🗑️ Silme
+  - 📌 Pinleme
+- 👤 Kullanıcı Sistemi
+  - 🔐 JWT Auth
+  - 👥 Rol Yönetimi
+  - 🔑 OAuth2 Desteği
+- 🎨 Görsel Özellikler
+  - 🌙 Dark/Light Mode
+  - 🎨 Tema Seçenekleri
+  - 🖼️ Responsive Görseller
+- 🔍 Arama ve Filtreleme
+  - 🏷️ Etiket Sistemi
+  - 📂 Kategori Filtreleme
+  - 📅 Tarih Bazlı Arama
+- 💬 Etkileşim
+  - 💭 Yorumlar
+  - 👍 Beğeni Sistemi
+  - 🔔 Bildirimler
+- 📊 Admin Paneli
+  - 📈 İstatistikler
+  - 👥 Kullanıcı Yönetimi
+  - 📝 İçerik Yönetimi
+- 🌍 Çoklu Dil
+  - 🇹🇷 Türkçe
+  - 🇺🇸 İngilizce
+  - 🇩🇪 Almanca
 
-### 🚀 Geliştirme Aşamaları
-1. **Tasarım ve Planlama**
-   - 📐 Wireframe oluşturma
-   - 🎨 Renk paleti seçimi
-   - 📝 Tipografi belirleme
-
-2. **Frontend Geliştirme**
-   - 🏠 Ana sayfa tasarımı
-   - 📄 Blog post sayfası
-   - 📑 Kategori sayfaları
-   - 📱 Responsive özellikler
-   - 🖱️ Kullanıcı etkileşimleri
-
-3. **Özellik Geliştirmeleri**
-   - 🔐 Kullanıcı girişi/kaydı
-   - ✏️ Blog post CRUD işlemleri
-   - 💭 Yorum sistemi entegrasyonu
-   - 🔍 Arama fonksiyonu implementasyonu
-
-4. **Test ve Optimizasyon**
-   - 🌐 Cross-browser testing
-   - 📱 Mobil uyumluluk testleri
-   - ⚡ Performans optimizasyonu
-   - 🔧 SEO düzenlemeleri
+### 🎯 Test Kapsamı
+- 🏃‍♂️ Smoke Tests
+  - ✅ Kritik Fonksiyonlar
+  - 🔐 Login/Logout
+  - 📝 Temel CRUD
+- 🔄 Regression Tests
+  - 📱 Cross-Browser
+  - 🖥️ Cross-Platform
+  - 📱 Responsive
+- ⚡ Performance Tests
+  - 🚀 Sayfa Yüklenme
+  - 📊 API Response
+  - 🗃️ DB Queries
 
 ## 🤝 Katkıda Bulunma
 
