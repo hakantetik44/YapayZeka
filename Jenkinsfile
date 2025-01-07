@@ -49,14 +49,13 @@ pipeline {
                         sh '''
                             cd blog
                             python3 -m http.server ${BLOG_PORT} &
-                            echo "Blog sunucusu başlatıldı - Port: ${BLOG_PORT}"
+                            echo $! > .blog-server.pid
+                            sleep 5
                         '''
-                        
-                        // Sunucunun başlamasını bekle
-                        sleep 5
                     } catch (Exception e) {
-                        echo "Blog sunucusu başlatılamadı: ${e.message}"
+                        echo "Blog sunucusu başlatma hatası: ${e.message}"
                         currentBuild.result = 'UNSTABLE'
+                        throw e
                     }
                 }
             }
@@ -66,25 +65,15 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Test klasörlerini oluştur
-                        sh '''
-                            mkdir -p target/allure-results
-                            mkdir -p target/cucumber-reports
-                        '''
-                        
-                        // Testleri çalıştır
                         sh '''
                             mvn test \
-                                -Dmaven.test.failure.ignore=true \
-                                -Dtest.env=jenkins \
-                                -Dwebdriver.chrome.whitelistedIps="" \
-                                -Dwebdriver.chrome.verboseLogging=true \
-                                -Dcucumber.plugin="pretty,json:target/cucumber-reports/cucumber.json,html:target/cucumber-reports/cucumber.html,io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm" \
-                                -B
+                                -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+                                -B -V
                         '''
                     } catch (Exception e) {
                         echo "Test çalıştırma hatası: ${e.message}"
                         currentBuild.result = 'UNSTABLE'
+                        throw e
                     }
                 }
             }
@@ -96,22 +85,9 @@ pipeline {
                     try {
                         // Process'leri temizle
                         sh '''
-                            pkill -f allure || true
-                            pkill -f jetty || true
-                            pkill -f chrome || true
-                            pkill -f chromedriver || true
-                        '''
-                        
-                        // Test sonuçlarını kontrol et
-                        sh '''
-                            if [ ! -d "target/allure-results" ]; then
-                                echo "Allure sonuçları bulunamadı"
-                                mkdir -p target/allure-results
-                            fi
-                            
-                            if [ ! -d "target/cucumber-reports" ]; then
-                                echo "Cucumber sonuçları bulunamadı"
-                                mkdir -p target/cucumber-reports
+                            if [ -f blog/.blog-server.pid ]; then
+                                kill -9 $(cat blog/.blog-server.pid) || true
+                                rm blog/.blog-server.pid
                             fi
                         '''
                         
@@ -124,35 +100,10 @@ pipeline {
                             results: [[path: 'target/allure-results']]
                         ])
                         
-                        // Raporları arşivle
-                        sh '''
-                            # Cucumber raporu
-                            if [ -d "target/cucumber-reports" ]; then
-                                cd target/cucumber-reports
-                                zip -r ../cucumber-reports.zip . || true
-                                cd ../..
-                            fi
-                            
-                            # Allure raporu
-                            if [ -d "allure-report" ]; then
-                                cd allure-report
-                                zip -r ../allure-report.zip . || true
-                                cd ..
-                            fi
-                        '''
-                        
-                        // Artifact'leri arşivle
-                        archiveArtifacts(
-                            artifacts: '''
-                                target/cucumber-reports.zip,
-                                allure-report.zip
-                            ''',
-                            fingerprint: true,
-                            allowEmptyArchive: true
-                        )
                     } catch (Exception e) {
                         echo "Rapor oluşturma hatası: ${e.message}"
                         currentBuild.result = 'UNSTABLE'
+                        throw e
                     }
                 }
             }
@@ -162,60 +113,46 @@ pipeline {
     post {
         always {
             script {
-                try {
-                    // Process'leri temizle
-                    sh '''
-                        pkill -f allure || true
-                        pkill -f jetty || true
-                        pkill -f chrome || true
-                        pkill -f chromedriver || true
-                        lsof -ti:${BLOG_PORT} | xargs kill -9 || true
-                    '''
-                } catch (Exception e) {
-                    echo "Process temizleme hatası: ${e.message}"
-                } finally {
-                    // Workspace'i temizle
-                    cleanWs(
-                        cleanWhenNotBuilt: false,
-                        deleteDirs: true,
-                        disableDeferredWipeout: true,
-                        notFailBuild: true
-                    )
-                }
+                // Test sonuçlarını topla
+                def testResults = []
+                def allureResults = []
                 
-                // Test sonuç özeti
-                echo """
+                // JUnit test sonuçlarını oku
+                def junitResults = junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+                testResults << [
+                    name: 'JUnit',
+                    total: junitResults.totalCount,
+                    failed: junitResults.failCount,
+                    skipped: junitResults.skipCount,
+                    passed: junitResults.passCount
+                ]
+                
+                // Allure raporlarını arşivle
+                archiveArtifacts allowEmptyArchive: true, artifacts: 'target/allure-results/**/*.*'
+                
+                // Test sonuç özetini oluştur
+                def summary = """
 ╔═══════════════════════════╗
 ║   Test Sonuç Özeti        ║
 ╚═══════════════════════════╝
 
 📊 Raporlar:
-- 📈 Allure: ${BUILD_URL}allure
-- 📁 Artifacts: ${BUILD_URL}artifact
-
-🎯 Build Durumu: ${currentBuild.result ?: 'SUCCESS'}
-⏱️ Süre: ${currentBuild.durationString}
-                """
-            }
-        }
-        
-        failure {
-            script {
-                echo """
-❌ Build başarısız oldu!
-- Build URL: ${BUILD_URL}
-- Console Log: ${BUILD_URL}console
-                """
-            }
-        }
-        
-        unstable {
-            script {
-                echo """
-⚠️ Build kararsız durumda!
-- Build URL: ${BUILD_URL}
-- Test Reports: ${BUILD_URL}allure
-                """
+"""
+                testResults.each { result ->
+                    summary += """
+🔍 ${result.name} Sonuçları:
+   ✅ Başarılı: ${result.passed}
+   ❌ Başarısız: ${result.failed}
+   ⏭️ Atlanan: ${result.skipped}
+   📝 Toplam: ${result.total}
+"""
+                }
+                
+                // Sonuçları ekrana yazdır
+                echo summary
+                
+                // Workspace'i temizle
+                cleanWs()
             }
         }
     }
