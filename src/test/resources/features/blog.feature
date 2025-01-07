@@ -1,9 +1,10 @@
 # language: tr
+
 @blog
 Feature: Blog Sayfası Test Senaryoları
 
   Background:
-    Given Blog sayfasına git
+    * Blog sayfasına git
 
   @performance
   Scenario: Sayfa yüklenme performansını kontrol et
@@ -16,11 +17,11 @@ Feature: Blog Sayfası Test Senaryoları
     And Menü öğeleri doğru şekilde görüntülenmeli
 
     Examples:
-      | boyut        |
-      | 1920x1080   |
-      | 1366x768    |
-      | 1024x768    |
-      | 375x812     |
+      | boyut      |
+      | 1920x1080  |
+      | 1366x768   |
+      | 1024x768   |
+      | 375x812    |
 
   @navigation
   Scenario: Sosyal medya bağlantılarını kontrol et
